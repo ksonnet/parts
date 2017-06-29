@@ -21,33 +21,41 @@ If you have additional needs, you can add your own functions to the `custom` fil
 ### Prerequisites
 * [BUILD] *You should have [Jsonnet](http://jsonnet.org/) installed (minimum version 0.9.4).* See [installation instructions](https://github.com/ksonnet/ksonnet-lib#install) if this is not the case.
 
-* [BUILD] *You should have created a Secret and a ConfigMap for your cluster, which can be used to mount information such as your unique Honeycomb writekey and log parser settings.* See the [`honeycomb-kubernetes-agent` quickstart](https://github.com/honeycombio/honeycomb-kubernetes-agent/tree/devel#quickstart) for instructions.
+* [BUILD] *You should have cloned or forked the [Ksonnet library](https://github.com/ksonnet/ksonnet-lib) and be on the `honeycomb` branch.* If not:
+```
+git clone git@github.com:ksonnet/ksonnet-lib.git
+git co honeycomb
+```
 
 * [RUN] *You should have access to an up-and-running Kubernetes cluster.* If you do not have a cluster, follow the [AWS Quickstart Kubernetes Tutorial](http://docs.heptio.com/content/tutorials/aws-cloudformation-k8s.html) to set one up with a single command.
 
 * [RUN] *You should have `kubectl` installed.* If not, follow the instructions for [installing via Homebrew (MacOS)](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-with-homebrew-on-macos) or [building the binary (Linux)](https://kubernetes.io/docs/tasks/tools/install-kubectl/#tabset-1).
 
+* [RUN] *You should have a Honeycomb account*. [The trial version](https://ui.honeycomb.io/signup) lasts 30 days, which is sufficient for this demo.
+
 * Ideally, you should have some familiarity with Ksonnet syntax, as described in the [official README](http://ksonnet.heptio.com/docs/core-packages/ksonnet-lib.html#write-your-config-files-with-ksonnet).
 
 ### Install
-Clone or fork this Ksonnet repo:
+Clone or fork this repo:
 ```
-git clone git@github.com:ksonnet/ksonnet-lib.git
+git clone git@github.com:ksonnet/mixins.git
 ```
 
 ### Build
 
-Run the following command in the current directory (`ksonnet-lib/mixins/honeycomb`), where `KSONNET_LIB_PATH` is the home directory of your Ksonnet repo:
+Before building your JSON config, you will need to populate the `conf.secret.key` field with your Honeycomb account writekey (it is currently set to `error "No key specified"`). You can find the writekey on your [account page](https://ui.honeycomb.io/account). This authorizes the Honeycomb agent with your account.
+
+Then run the following command in the current directory (`mixins/incubator/honeycomb`), where `KSONNET_LIB_PATH` points to the home directory of your Ksonnet repo:
 
 ```
-jsonnet honeycomb-agent-ds-app.jsonnet -J <KSONNET_LIB_PATH> > honeycomb-agent-ds-app.json
+jsonnet examples/daemonset.jsonnet -J <KSONNET_LIB_PATH> > daemonset.json
 ```
 
 ### Run
 
 To start the Honeycomb agent on your cluster, run:
 ```
-kubectl create -f honeycomb-agent-ds-app.json
+kubectl create -f examples/daemonset.json
 ```
 
 
