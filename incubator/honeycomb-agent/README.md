@@ -47,7 +47,7 @@ git clone git@github.com:ksonnet/mixins.git
 
 ### Build
 
-** Honeycomb Agent **
+**Honeycomb Agent**
 
 Before building your JSON config, you will need to find your Honeycomb writekey, in order to identify your account to the agent. You can find the writekey on your [account page](https://ui.honeycomb.io/account). Then base64 encode the writekey so that you can use it in a Kubernetes secret:
 
@@ -63,7 +63,7 @@ Then run the following command in the current directory (`mixins/incubator/honey
 jsonnet examples/daemonset.jsonnet -J $KSONNET_LIB_PATH examples/daemonset.json
 ```
 
-** Sample Nginx App **
+**Sample Nginx App**
 
 A Ksonnet config for a generic Nginx app is provided. After building the config, you can easily deploy it to your cluster to make sure that the Honeycomb agent's log collection is working properly.
 
