@@ -55,7 +55,7 @@ Before building your JSON config, you will need to find your Honeycomb writekey,
 $HONEYCOMB_WRITE_KEY | base64
 ```
 
-Populate the `conf.secret.key` field in `examples/daemonset.jsonnet` with your Honeycomb account writekey (it is currently set to `error "No key specified"`).
+Populate the `conf.secret.key` field in `examples/daemonset.jsonnet` with your Honeycomb account writekey (it is currently set to "foo").
 
 Then run the following command in the current directory (`mixins/incubator/honeycomb`), where `KSONNET_LIB_PATH` points to the home directory of your Ksonnet repo:
 
@@ -119,13 +119,10 @@ Name | Default Value | Description | Important to Change?
 --- | --- | --- | ---
 namespace | "kube-system" | The namespace that all Honeycomb pods are created under | No
 rbac.accountname | "honeycomb-serviceaccount" | The name of the ServiceAccount that allows the Honeycomb agent to read pods and node API info. | No
-volume.configMapName | "config" | The prefix of the filename where the ConfigMap is saved. | **Do not change**. The core logic in `honeycom-agent.libsonnet` hardcodes the `configMap` path as `config.yaml`.
 volume.varlogName | "varlog" | The name of the mounted volume that corresponds to log output. | No
 volume.podlogsName | "varlibdockercontainers" | The name of the mounted volume that corresponds to log output. | No
-configMap.name | "honeycomb-agent-config" | The name of the ConfigMap that defines Honeycomb settings. | No
 configMap.data | YAML config (see code) | The YAML data that configures Honeycomb settings like parser label selectors. See [Honeycomb documentation](https://github.com/honeycombio/honeycomb-kubernetes-agent/blob/master/README.md) for details on available configurations.  | Yes (if you want to change parser behavior)
-secret.name | "honeycomb-writekey" | The name of the writekey secret. | No
-secret.key | error "No key specified" | The base-64-encoding of your Honeycomb write key. | **Yes.** This must be populated or the Honeycomb agent won't be able to send processed logs to the API for your dashboard.
+secret.key | "foo" | The base-64-encoding of your Honeycomb write key. | **Yes.** This must be populated or the Honeycomb agent won't be able to send processed logs to the API for your dashboard.
 
 This `config` is passed in when the base Honeycomb DaemonSet is created.
 
