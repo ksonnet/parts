@@ -8,37 +8,44 @@
 
 ## Overview
 
-The Ksonnet files in this directory generate a Kubernetes JSON config,
-which can then be used to deploy the [Honeycomb][1] monitoring agent
-to your cluster.
+`honeycomb-agent.libsonnet` is a JSON-compatible [ksonnet][12] library
+that makes it easy to add [Honeycomb][1] to your Kubernetes
+applications. The `examples` directory contains a few examples of how
+to use it, including:
 
-The Honeycomb agent runs as a DaemonSet that collects `stdout` logs
-from every node. It also leverages pod labels to support
-application-specific log parsing (e.g. nginx, MySQL).
-
-*Ksonnet logic is intended to be highly composable.* The files are
-split as follows:
-
-* `honeycomb-agent.libsonnet`: This contains all the core
-  functionality for the Honeycomb agent (e.g. DaemonSet, Secrets,
-  RBAC, volume mounting), which can be invoked and combined in other
-  Ksonnet config files. Generally, you will not need to modify this
-  unless you want to create custom mixins.
-* `examples/daemonset.jsonnet`: This file contains:
-  * "Meta"-config values (e.g. `secret.key`) that will generate
-    distinct Kubernetes config files if modified. These are detailed
-    the [configuration section](#configuration).
-  * A base Honeycomb DaemonSet that has been combined with a
-    volume-mounting mixin. It attaches three volumes: one volume for
-    the Honeycomb configuration and two volumes to record log output.
-* `nginx-app.libsonnet`: This file specifies a sample Nginx app that
-  can be used to test the Honeycomb agent. The pods are tagged with
-  the `app=nginx` label. By default, logs are written to `/var/logs`
-  and `/var/lib/docker/containers` directories.
-
-If you have additional needs, you can add your own functions to the
-`honeycom-agent.libsonnet` file and mix them in with the DaemonSet
-from `daemonset.jsonnet`.
+1. Using the `DaemonSet` builder to add the Honeycomb agent to each
+   node in the cluster, and configuring it to parse the `stdout` logs
+   of any `Pod` running on the same node. (See [source][16].)
+    ```c++
+    local daemonSet =
+      local daemonSetName = "honeycomb-agent-v1.1";
+      // Create simple `DaemonSet`, with required `ConfigMap` and
+      // `Secret` objects that are required to deploy the Honeycomb
+      // agent on each node in the cluster.
+      honeycomb.app.daemonSetBuilder.new(daemonSetName, conf) +
+      // Generate RBAC rules and volumes required to access pod logs,
+      // and mount these volumes in the Honeycomb agent container.
+      honeycomb.app.daemonSetBuilder.configureForPodLogs(conf);
+    ```
+1. Adding the Honeycomb agent to a normal JSON `Deployment` object as
+   a side-car, so that it can parse the logs at some path. (See
+   [source][17].)
+    ```c++
+    {
+       "apiVersion": "extensions/v1beta1",
+       "kind": "Deployment",
+       [... object details omitted ...],
+    } +
+      // Add nginx logging to the deployment, so that the nginx and
+      // Honeycomb agent container can both access the logs.
+      deployment.mixin.spec.template.spec.volumes(nginxLogVolume) +
+      // Mount container on both the nginx container and the
+      // Honeycomb agent container.
+      deployment.mapContainersWithName(
+        ["nginx", "honeycomb-agent"],
+        function(nginxContainer)
+          nginxContainer + container.volumeMounts(nginxLogMount))
+    ```
 
 ## Getting Started
 
@@ -46,8 +53,8 @@ from `daemonset.jsonnet`.
 
 * **[BUILD]** *You should have [Jsonnet][3] installed (minimum version
   0.9.4).* See [installation instructions][4] if this is not the case.
-* **[BUILD]** *You should have cloned or forked the [Ksonnet
-  library][5] and be on the `honeycomb` branch.* If not:
+* **[BUILD]** *You should have cloned or forked the [ksonnet
+  library][5].* If not:
   ```shell
   git clone git@github.com:ksonnet/ksonnet-lib.git
   git co honeycomb
@@ -59,8 +66,8 @@ from `daemonset.jsonnet`.
   instructions for [installing via Homebrew (MacOS)][7] or [building
   the binary (Linux)][8].
 * **[RUN]** *You should have a Honeycomb account*. [The trial
-  version][9] lasts 30 days, which is sufficient for this demo.
-* Ideally, you should have some familiarity with Ksonnet syntax, as
+  version][9] lasts 30 days.
+* It may be helpful to have some familiarity with ksonnet syntax, as
   described in the [official README][10].
 
 ### Install
@@ -71,9 +78,7 @@ Clone or fork this repo:
 git clone git@github.com:ksonnet/mixins.git
 ```
 
-### Build
-
-#### Honeycomb Agent
+### Building the examples
 
 Before building your JSON config, you will need to find your Honeycomb
 writekey, in order to identify your account to the agent. You can find
@@ -84,105 +89,148 @@ writekey so that you can use it in a Kubernetes secret:
 $HONEYCOMB_WRITE_KEY | base64
 ```
 
-Populate the `conf.secret.key` field in `examples/daemonset.jsonnet`
-with your Honeycomb account writekey (it is currently set to "foo").
+You will use this key to populate a secret field in each of the
+examples below.
 
-Then run the following command in the current directory
-(`mixins/incubator/honeycomb`), where `KSONNET_LIB_PATH` points to the
-home directory of your Ksonnet repo:
+### Building and running the Honeycomb agent as part of a `Deployment`
 
-```shell
-jsonnet examples/daemonset.jsonnet -J $KSONNET_LIB_PATH examples/daemonset.json
-```
+This application runs nginx in a `Deployment` (along with a
+corresponding `Service`), logging to `stdout`. This example uses
+mixins to embed the Honeycomb agent in the nginx `Deployment` object
+as a sidecar, ane is configured to look for the nginx `Deployment`'s
+`stdout` using Pod labels.
 
-#### Sample Nginx App
+1. **Add your Honeycomb writekey to the example, so that it can talk
+   to the Honeycomb server.** In
+   [`incubator/honeycomb-agent/examples/sidecar-raw-deployment-object/nginx-deployment.jsonnet`][15],
+   change `conf.secret.key` to hold the Honeycomb writekey you
+   acquired above (it is currently set to raise an `error` if you
+   don't set it).
+1. **Compile the `Deployment` object containing the Honeycomb agent
+   nginx, to JSON.** In the
+   `incubator/honeycomb-agent/examples/using-deployment-builder/`
+   directory, run the following command, where `KSONNET_LIB_PATH`
+   points to the root directory of your ksonnet repo, and
+   `MIXINS_LIB_PATH` points to the root of the mixins repo:
+    ```shell
+    jsonnet nginx-deployment.jsonnet -J $KSONNET_LIB_PATH $MIXINS_LIB_PATH nginx-deployment.json
+    ```
 
-A Ksonnet config for a generic Nginx app is provided. After building
-the config, you can easily deploy it to your cluster to make sure that
-the Honeycomb agent's log collection is working properly.
+#### Running
 
-Run the following:
+1. **Start the `Deployment` with nginx and the Honeycomb agent sidecar
+   on your cluster.** In
+   `incubator/honeycomb-agent/examples/using-deployment-builder/`, run:
+    ```shell
+    kubectl create -f nginx-deployment.json
+    ```
+1. **Start the nginx service on your cluster.** In
+   `incubator/honeycomb-agent/examples/using-deployment-builder/`, run:
+    ```shell
+    kubectl create -f nginx-service.json
+    ```
 
-```shell
-jsonnet examples/nginx_sample.jsonnet -J $KSONNET_LIB_PATH > examples/nginx_sample.json
-```
+### Building and running the standalone Honeycomb agent `DaemonSet`
 
-### Run
+This application runs nginx in a `Deployment` (along with a
+corresponding `Service`), logging to `stdout`. The Honeycomb agent
+runs as a `DaemonSet` (so that it runs on every node in the cluster)
+that is configured to look for the nginx `Deployment`'s `stdout` using
+Pod labels.
 
-To start the Honeycomb agent on your cluster, run:
+1. **Add your Honeycomb writekey to the example, so that it can talk
+   to the Honeycomb server.** In
+   [`incubator/honeycomb-agent/examples/using-daemonset-builder/honeycomb-daemonset.jsonnet`][13],
+   change `conf.secret.key` to hold the Honeycomb writekey you
+   acquired above (it is currently set to raise an `error` if you
+   don't set it).
+1. **Compile the Honeycomb agent `DaemonSet` file to JSON.** In the
+   `incubator/honeycomb-agent/examples/using-daemonset-builder/`
+   directory, run the following command, where `KSONNET_LIB_PATH`
+   points to the root directory of your ksonnet repo, and
+   `MIXINS_LIB_PATH` points to the root of the mixins repo:
+    ```shell
+    jsonnet honeycomb-daemonset.jsonnet -J $KSONNET_LIB_PATH -J $MIXINS_LIB_PATH honeycomb-daemonset.json
+    ```
+1. **Compile the nginx app to JSON.** In the
+   `incubator/honeycomb-agent/examples/using-daemonset-builder/`
+   directory, run:
+    ```shell
+    jsonnet nginx-app.jsonnet -J $KSONNET_LIB_PATH > nginx-app.json
+    ```
 
-```shell
-kubectl create -f examples/daemonset.json
-```
+#### Running
 
-Then deploy the Nginx app:
+1. **Start the Honeycomb agent on your cluster.** In
+   `incubator/honeycomb-agent/examples/using-daemonset-builder/`, run:
+    ```shell
+    kubectl create -f honeycomb-daemonset.json
+    ```
+1. **Start the nginx app on your cluster.** In
+   `incubator/honeycomb-agent/examples/using-daemonset-builder/`, run:
+    ```shell
+    kubectl create -f nginx-app.json
+    ```
 
-```shell
-kubectl create -f examples/nginx_sample.json
-```
+### Checking your application
 
-You can check that the agent is successfully running with:
+Once your application is submitted to the cluster, you should verify
+that it is doing what you expect.
 
-```shell
-kubectl get pods -l k8s-app=honeycomb-agent --namespace=kube-system
-```
+1. **Check that the Pods are running.** Run:
+    ```shell
+    kubectl get pods -l k8s-app=honeycomb-agent --namespace=kube-system
+    ```
 
-You should see the following output:
+    You should see something like the following output:
 
-```shell
-NAME                                READY     STATUS    RESTARTS   AGE
-honeycomb-agent-v1.1-<PLACEHOLDER>   1/1       Running   0          1h
-honeycomb-agent-v1.1-<PLACEHOLDER>   1/1       Running   0          1h
-```
+    ```shell
+    NAME                                READY     STATUS    RESTARTS   AGE
+    honeycomb-agent-v1.1-<PLACEHOLDER>   1/1       Running   0          1h
+    honeycomb-agent-v1.1-<PLACEHOLDER>   1/1       Running   0          1h
+    ```
+1. **Check the output is being logged.** Run:
+    ```shell
+    kubectl logs honeycomb-agent-v1.1-<PLACEHOLDER> --namespace=kube-system
+    ```
 
-You can also check the log output of one of the Honeycomb pods:
-
-```shell
-kubectl logs honeycomb-agent-v1.1-<PLACEHOLDER> --namespace=kube-system
-```
-
-The output should show the applied label selectors (e.g. `app=mysql`)
-and the files that the agent is watching.
+    The output should show the applied label selectors (e.g. `app=mysql`)
+    and the files that the agent is watching.
 
 ## Configuration
 
 ### Meta-configs
 
-Below are the descriptions of the values that are set in the `config`
-variable in `daemonset.jsonnet`:
+`honeycomb-agent.libsonnet` uses an object with a specific schema to
+decide how to configure itself. The schema is as follows:
 
 Name | Default Value | Description | Important to Change?
 --- | --- | --- | ---
-namespace | "kube-system" | The namespace that all Honeycomb pods are created under | No
-rbac.accountname | "honeycomb-serviceaccount" | The name of the ServiceAccount that allows the Honeycomb agent to read pods and node API info. | No
-volume.varlogName | "varlog" | The name of the mounted volume that corresponds to log output. | No
-volume.podlogsName | "varlibdockercontainers" | The name of the mounted volume that corresponds to log output. | No
+secret.key | raises `error` | The base-64-encoding of your Honeycomb write key. | **Yes.** This must be populated or the Honeycomb agent won't be able to send processed logs to the API for your dashboard.
 configMap.data | YAML config (see code) | The YAML data that configures Honeycomb settings like parser label selectors. See [Honeycomb documentation](https://github.com/honeycombio/honeycomb-kubernetes-agent/blob/master/README.md) for details on available configurations.  | Yes (if you want to change parser behavior)
-secret.key | "foo" | The base-64-encoding of your Honeycomb write key. | **Yes.** This must be populated or the Honeycomb agent won't be able to send processed logs to the API for your dashboard.
+rbac.accountname | "honeycomb-serviceaccount" | The name of the ServiceAccount that allows the Honeycomb agent to read pods and node API info. | No
+agent.containerName | "honeycomb-agent" | The name of the agent container when we mix it into a deployment. It should be chosen so that it doesn't collide with any other container names in your app. | No
+namespace | "kube-system" | The namespace that all Honeycomb pods are created under | No
 
-This `config` is passed in when the base Honeycomb DaemonSet is created.
+## Customization
 
-### Mixins
+`honeycomb-agent.libsonent` exposes many of the primitives you will
+need to customize how your application uses the Honeycomb agent.
 
-To define a *new* custom mixin, you can modify the code in
-`honeycomb-agent.libsonnet`. The file is fairly well documented with
-comments that should give you a sense of where to change things.
+The file is well-documented, and is broken down into three main
+namespaces:
 
-Once your mixin function is defined (whether pre-existing or added by
-yourself), you can incorporate it into your Honeycomb DaemonSet by
-using the `daemonSet+::` operator. You can modify the appropriate
-section of `daemonset.jsonnet` like so:
+* `app::`, which contains the main application-level primitives
+  (_e.g._, `daemonSetBuilder`) that are most relevant to people simply
+  using the library.
+* `parts::`, which contains the various parts necessary to build the
+  application-level primitives like `daemonSetBuilder`).
+* `mixin::`, which contains small utility mixins used to customize
+  existing Kubernetes API objects (e.g.,
+  `deployment.addHostMountedPodLogs`).
 
-```c++
-honeycomb.app.daemonSetBuilder.new("honeycomb-agent-v1.1", conf) + {
-  // Customizations. Add pod logs to the Honeycomb agent DaemonSet,
-  // so that it can tail `stdout` of selected pods.
-  daemonSet+:: honeycomb.mixin.daemonSet.addHostMountedPodLogs(conf),
-
-  // custom code below
-  daemonSet+:: <MY CUSTOM FUNCTION THAT RETURNS A DAEMONSET MIXIN>
-};
-```
+To see some examples of how to use these namespaces to build your own
+mixins, look in the `app::` namespace.
 
 [1]: https://honeycomb.io
 [2]: https://github.com/honeycombio/honeycomb-kubernetes-agent/tree/master
@@ -195,3 +243,9 @@ honeycomb.app.daemonSetBuilder.new("honeycomb-agent-v1.1", conf) + {
 [9]: https://ui.honeycomb.io/signup
 [10]: http://ksonnet.heptio.com/docs/core-packages/ksonnet-lib.html#write-your-config-files-with-ksonnet
 [11]: https://ui.honeycomb.io/account
+[12]: http://ksonnet.heptio.com
+[13]: https://github.com/ksonnet/mixins/blob/honeycomb/incubator/honeycomb-agent/examples/using-daemonset-builder/honeycomb-daemonset.jsonnet
+[14]: https://github.com/ksonnet/mixins/blob/honeycomb/incubator/honeycomb-agent/examples/using-daemonset-builder/honeycomb-deployment.jsonnet
+[15]: https://github.com/ksonnet/mixins/blob/honeycomb/incubator/honeycomb-agent/examples/sidecar-raw-deployment-object/nginx-deployment.jsonnet
+[16]: https://github.com/ksonnet/mixins/tree/honeycomb/incubator/honeycomb-agent/examples/using-daemonset-builder
+[17]: https://github.com/ksonnet/mixins/tree/honeycomb/incubator/honeycomb-agent/examples/sidecar-raw-deployment-object
