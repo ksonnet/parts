@@ -4,6 +4,7 @@ local k = import "ksonnet.beta.2/k.libsonnet";
 local ds = k.extensions.v1beta1.daemonSet;
 local container = k.extensions.v1beta1.daemonSet.mixin.spec.template.spec.containersType;
 local configMap = k.core.v1.configMap;
+local deployment = k.extensions.v1beta1.deployment;
 local envVar = container.envType;
 local secret = k.core.v1.secret;
 local volume = ds.mixin.spec.template.spec.volumesType;
@@ -85,6 +86,57 @@ local rule = clRole.rulesType;
         rbacObjs + {
           daemonSet+::
             $.mixin.daemonSet.addHostMountedPodLogs(
+              varlogVolName,
+              podLogsVolName,
+              $.util.containerNameInSet(config.agent.containerName)) +
+            ds.mixin.spec.template.spec.serviceAccountName(config.rbac.accountName)
+        },
+    },
+
+    deploymentBuilder:: {
+      fromDeployment(appDeployment, config)::
+        local configMapObjs = $.parts.configMap(
+          defaultConfig.configMap.name, config.configMap.data, config.namespace);
+
+        local secretObjs = $.parts.secret(
+          defaultConfig.secret.name, config.secret.key, config.namespace);
+
+        local agentContainerSelector =
+          $.util.containerNameInSet(config.agent.containerName);
+        local agentContainer = $.parts.agentContainer(
+          config.agent.containerName, config.agent.containerTag);
+
+        // Return.
+        {
+          // NOTE: The way this is exposed to the user means that
+          // there are some limitations to what a mixin can be
+          // applied to do. For example, appending a volume mount to
+          // every container in the Deployment is doable, but changing
+          // the name of a volume is harder, because after this
+          // object is crated, the name appears in multiple places.
+          // This may or may not be important for our use case.
+
+          toArray():: [self.deployment, self.configMap, secretObjs.secret],
+          deployment::
+            appDeployment +
+            deployment.mixin.spec.template.spec.containers(agentContainer) +
+            configMapObjs.mixin.deployment.addConfigVolume(
+              defaultConfig.volume.configMapName,
+              agentContainerSelector) +
+            secretObjs.mixin.daemonSet.addWriteKey(agentContainerSelector),
+          configMap:: configMapObjs.configMap,
+          secret:: secretObjs.secret,
+        },
+
+      configureForPodLogs(
+        config,
+        varlogVolName="varlog",
+        podLogsVolName="varlibdockercontainers",
+      )::
+        local rbacObjs = $.parts.rbac(config.rbac.accountName, config.namespace);
+        rbacObjs + {
+          deployment+::
+            $.mixin.deployment.addHostMountedPodLogs(
               varlogVolName,
               podLogsVolName,
               $.util.containerNameInSet(config.agent.containerName)) +
@@ -227,6 +279,24 @@ local rule = clRole.rulesType;
                   then c + container.volumeMounts([configMount(volName)])
                   else c),
           },
+          deployment:: {
+            // configVolumeMixin takes a volume name and produces a
+            // mixin that will append the Honeycomb agent `ConfigMap`
+            // to a `DaemonSet` (as, e.g., the Honeycomb agent is),
+            // and then mount that `ConfigMap` in the subset of
+            // containers in the `DaemonSet` specified by the
+            // predicate `containerSelector`.
+            addConfigVolume(volName, containerSelector=function(c) true)::
+              // Add volume to DaemonSet.
+              deployment.mixin.spec.template.spec.volumes([configVol(volName)]) +
+
+              // Add volume mount to every container in the DaemonSet.
+              deployment.mapContainers(
+                function (c)
+                  if containerSelector(c)
+                  then c + container.volumeMounts([configMount(volName)])
+                  else c),
+          },
         },
       },
 
@@ -247,6 +317,14 @@ local rule = clRole.rulesType;
           daemonSet:: {
             addWriteKey(containerSelector=function(c) true)::
               ds.mapContainers(
+                function (c)
+                  if containerSelector(c)
+                  then c + container.env(secretKey)
+                  else c),
+          },
+          deployment:: {
+            addWriteKey(containerSelector=function(c) true)::
+              deployment.mapContainers(
                 function (c)
                   if containerSelector(c)
                   then c + container.env(secretKey)
@@ -279,6 +357,31 @@ local rule = clRole.rulesType;
 
         // Add volume mount to selected containers in the DaemonSet.
         ds.mapContainers(
+          function (c)
+            if containerSelector(c)
+            then
+              c + container.volumeMounts([
+                podLogs.varLogMount,
+                podLogs.podLogMount,
+              ])
+            else c),
+    },
+
+    deployment:: {
+      addHostMountedPodLogs(
+        varlogName, podlogsName, containerSelector=function(c) true
+      )::
+        local podLogs = $.parts.podLogs(varlogName, podlogsName);
+
+        // Add volume to Deployment, and attach mounts to every
+        // container for which `containerSelector` is true.
+        deployment.mixin.spec.template.spec.volumes([
+          podLogs.varLogVolume,
+          podLogs.podLogVolume,
+        ]) +
+
+        // Add volume mount to selected containers in the Deployment.
+        deployment.mapContainers(
           function (c)
             if containerSelector(c)
             then
