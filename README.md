@@ -5,11 +5,11 @@
 This repository contains a collection of [ksonnet][1] libraries,
 designed to make it easy to:
 
-* Embed other projects into your Kubernetes applications as "sidecars"
+* *Embed other projects* into your Kubernetes applications as "sidecars"
   (_e.g._, adding the [Honeycomb observability agent][7] to an existing
-  `Deployment` authored by you).
-* Customize and extend Kubernetes applications to fit your needs
-  (_i.e._, ksonnet provides a robust ability to manipulate Kubernetes
+  `Deployment` you've authored).
+* *Customize and extend Kubernetes applications* to fit your needs
+  (_i.e._, with ksonnet, you can manipulate Kubernetes
   API objects, so you are not constrained by a single YAML values
   file.)
 
@@ -19,8 +19,7 @@ For more information, see the [ksonnet Github repo][2].
 
 The repository is structured into two main sets of libraries:
 
-* `incubator/`, which contains libraries that are contributed to the
-  community to harden them.
+* `incubator/`, which contains libraries that are relatively new, and still need to be vetted by the community (similar to alpha/beta releases).
 * `stable/`, which contains libraries that are considered to be
   production-ready.
 
@@ -46,7 +45,7 @@ contributing!
 
 ## Contact us
 
-See the [contact information for the ksonnet community][6]
+See the [contact information for the ksonnet community][6].
 
 [1]: http://ksonnet.heptio.com/
 [2]: https://github.com/ksonnet/ksonnet-lib
