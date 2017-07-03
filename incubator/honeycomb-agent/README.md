@@ -95,21 +95,17 @@ git clone git@github.com:ksonnet/mixins.git
 
 ### Credentials
 
-Before building and running your ksonnet configs, you will need your Honeycomb
-writekey. This writekey identifies your account to the agent.
+Before building and running your ksonnet configs, you will need your
+Honeycomb writekey. This writekey identifies your account to the
+agent.
 
-You can find the writekey on your [account page][11]. Once acquired, base64 encode the
-writekey so that you can use it in a Kubernetes secret:
-
-```shell
-export ENCODED_WRITE_KEY=$HONEYCOMB_WRITE_KEY | base64
-```
-
-Each of the examples below use `$ENCODED_WRITE_KEY` to populate a secret field.
+You can find the writekey on your [account page][11]. Each of the
+examples below refers to the write key as `$HONEYCOMB_WRITE_KEY`.
 
 ### Example A: The Honeycomb agent as `Deployment` sidecar
 
 This sample application includes the following Kubernetes objects:
+
 * A `Deployment` (*`nginx-deployment.jsonnet`*) that runs:
   * nginx logging to `stdout`
   * a Honeycomb agent, embedded as a sidecar and configured to look for nginx's `stdout` with *file paths*
@@ -122,7 +118,9 @@ The nginx `Service` object definition is already valid JSON. To build the `Deplo
 1. **Add your Honeycomb writekey to the example, so that it can talk
    to the Honeycomb server.** In
    [`examples/sidecar-raw-deployment-object/nginx-deployment.jsonnet`][15],
-   change `conf.secret.key` to hold the value of `$ENCODED_WRITE_KEY`. (It is currently set to raise an error during the build).
+   change `conf.secret.key` to hold the value of
+   `$HONEYCOMB_WRITE_KEY`. (It is currently set to raise an error
+   during the build).
 
 1. **Compile the `Deployment` object.** In the
    `./examples/sidecar-raw-deployment-object/`
@@ -170,7 +168,9 @@ All of the above are defined in ksonnet files that need to be compiled to valid 
 1. **Add your Honeycomb writekey to the example, so that it can talk
    to the Honeycomb server.** In
    [`incubator/honeycomb-agent/examples/using-daemonset-builder/honeycomb-daemonset.jsonnet`][13],
-   change `conf.secret.key` to hold the value of `$ENCODED_WRITE_KEY`. (It is currently set to raise an error during the build).
+   change `conf.secret.key` to hold the value of
+   `$HONEYCOMB_WRITE_KEY`. (It is currently set to raise an error
+   during the build).
 
 1. **Compile the Honeycomb agent `DaemonSet`.** In the
    `./examples/using-daemonset-builder/`
@@ -237,7 +237,7 @@ Regardless of which example you run, you should verify that your application is 
 
 There are two levels of setup that you can achieve with the Honeycomb mixin library:
 
-1. **Value Configuration**: Regardless of how you combine the Honeycomb primitives, you first need to configure values that are specific to your cluster (e.g. your Honeycomb writekey).  
+1. **Value Configuration**: Regardless of how you combine the Honeycomb primitives, you first need to configure values that are specific to your cluster (e.g. your Honeycomb writekey).
 
 1. **Feature Customization**: For basic functionality, you can stick to using the pre-defined, application-level primitives and their mixins. If your needs are not met by the existing primitives, you can extend the Honeycomb library by composing and building your own custom primitives.
 
@@ -246,7 +246,7 @@ There are two levels of setup that you can achieve with the Honeycomb mixin libr
 
 The application-level mixins from `honeycomb-agent.libsonnet` take in a JSON `config` object, which specifies cluster-specific configuration values.
 
-You can see an example of this below (taken from [`nginx-deployment.jsonnet`][15] in [Example A][19]:  
+You can see an example of this below (taken from [`nginx-deployment.jsonnet`][15] in [Example A][19]:
 
 ```
 local config = {
@@ -279,7 +279,7 @@ This `config` object follows a specific schema, detailed as follows:
 
 Name | Description | Example
 --- | --- | ---
-`secret.key` | The base-64-encoding of your Honeycomb write key. This allows the Honeycomb agent to send processed logs to the API (and your dashboard). | `$ENCODED_WRITE_KEY` (from previous sections)
+`secret.key` | The Honeycomb write key obtained from your [account page][11]. This allows the Honeycomb agent to send processed logs to the API (and your dashboard). | `$HONEYCOMB_WRITE_KEY` (from previous sections)
 `configMap.data` | YAML data that configures Honeycomb parser behavior, with settings like label selectors.  | See [Honeycomb documentation][20] for details on available configurations.
 `rbac.accountname` | The name of the ServiceAccount that allows the Honeycomb agent to read pod and node API info. | "honeycomb-serviceaccount"
 `agent.containerName` | The name of the agent container when we mix it into a deployment. It should be chosen so that it doesn't collide with any other container names in your app. | "honeycomb-agent"

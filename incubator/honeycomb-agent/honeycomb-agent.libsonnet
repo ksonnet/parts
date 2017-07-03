@@ -54,7 +54,7 @@ local rule = clRole.rulesType;
           defaultConfig.configMap.name, config.configMap.data, config.namespace);
 
         local secretObjs = $.parts.secret(
-          defaultConfig.secret.name, config.secret.key, config.namespace);
+          defaultConfig.secret.name, std.base64(config.secret.key), config.namespace);
 
         local agentDs = $.parts.daemonSet(
           daemonSetName, config.agent.containerName, config.agent.containerTag, config.namespace) +
@@ -99,7 +99,7 @@ local rule = clRole.rulesType;
           defaultConfig.configMap.name, config.configMap.data, config.namespace);
 
         local secretObjs = $.parts.secret(
-          defaultConfig.secret.name, config.secret.key, config.namespace);
+          defaultConfig.secret.name, std.base64(config.secret.key), config.namespace);
 
         local agentContainerSelector =
           $.util.containerNameInSet(config.agent.containerName);
