@@ -33,7 +33,7 @@ local mount = container.volumeMountsType;
 local conf = {
   namespace:: "kube-system",
   agent:: {
-    containerTag:: "bd16721",
+    containerTag:: "1df5484",
     containerName:: "honeycomb-agent",
   },
   rbac:: {
@@ -133,9 +133,6 @@ local appWithHoneycomb =
   honeycomb.app.deploymentBuilder.fromDeployment(nginxDeployment, conf) + {
     deployment+:: configureForNginx("nginx-logs", "nginx", conf),
   };
-
-// TODO: We want to choose our version of the honeycomb container,
-// too.
 
 // Emit all top-level objects (e.g., RBAC configurations, configMaps,
 // etc.) in a `v1.List`.

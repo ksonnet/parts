@@ -206,7 +206,6 @@ local rule = clRole.rulesType;
 
       local hcClusterRole =
         clRole.new() +
-        {apiVersion: "rbac.authorization.k8s.io/v1beta1"} +
         metadata +
         clRole.rules(
           rule.new() +
@@ -217,7 +216,6 @@ local rule = clRole.rulesType;
 
       local hcClusterRoleBinding =
         clRoleBinding.new() +
-        {apiVersion: "rbac.authorization.k8s.io/v1beta1"} +
         metadata +
         clRoleBinding.mixin.roleRef.apiGroup("rbac.authorization.k8s.io") +
         clRoleBinding.mixin.roleRef.name(name) +
