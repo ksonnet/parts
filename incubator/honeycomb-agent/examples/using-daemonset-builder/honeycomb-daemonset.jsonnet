@@ -22,7 +22,7 @@ local honeycomb = import "incubator/honeycomb-agent/honeycomb-agent.libsonnet";
 local conf = {
   namespace:: "kube-system",
   agent:: {
-    containerTag:: "bd16721",
+    containerTag:: "1df5484",
     containerName:: "honeycomb-agent",
   },
   rbac:: {
