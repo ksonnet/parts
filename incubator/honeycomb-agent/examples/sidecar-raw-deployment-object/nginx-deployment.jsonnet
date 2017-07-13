@@ -33,7 +33,7 @@ local mount = container.volumeMountsType;
 local conf = {
   namespace:: "kube-system",
   agent:: {
-    containerTag:: "1df5484",
+    containerTag:: "head",
     containerName:: "honeycomb-agent",
   },
   rbac:: {

@@ -48,7 +48,7 @@
                               }
                            }
                         ],
-                        "image": "honeycombio/honeycomb-kubernetes-agent:1df5484",
+                        "image": "honeycombio/honeycomb-kubernetes-agent:head",
                         "name": "honeycomb-agent",
                         "resources": {
                            "limits": {
