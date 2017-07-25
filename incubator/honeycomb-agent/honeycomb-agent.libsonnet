@@ -189,11 +189,15 @@ local rule = clRole.rulesType;
       ds.mixin.metadata.name(name) +
       ds.mixin.metadata.namespace(namespace) +
       ds.mixin.metadata.labels(self.defaultHoneycombLabels) +
+      // Update strategy.
+      ds.mixin.spec.updateStrategy.type("RollingUpdate") +
+      ds.mixin.spec.updateStrategy.rollingUpdate.maxUnavailable(1) +
       // Template.
       ds.mixin.spec.template.metadata.labels(self.defaultHoneycombLabels) +
       ds.mixin.spec.template.spec.containers(
         self.agentContainer(containerName, containerTag)) +
-      ds.mixin.spec.template.spec.terminationGracePeriodSeconds(30),
+      ds.mixin.spec.template.spec.terminationGracePeriodSeconds(30) +
+      ds.mixin.spec.template.spec.tolerations([{"operator": "Exists"}, {"effect": "NoSchedule"}]),
 
     // Creates all top-level objects and mixins we need to add RBAC
     // support to a Honeycomb agent DaemonSet.
