@@ -80,6 +80,14 @@
                   ],
                   "serviceAccountName": "honeycomb-serviceaccount",
                   "terminationGracePeriodSeconds": 30,
+                  "tolerations": [
+                     {
+                        "operator": "Exists"
+                     },
+                     {
+                        "effect": "NoSchedule"
+                     }
+                  ],
                   "volumes": [
                      {
                         "configMap": {
@@ -107,6 +115,12 @@
                      }
                   ]
                }
+            },
+            "updateStrategy": {
+               "rollingUpdate": {
+                  "maxUnavailable": 1
+               },
+               "type": "RollingUpdate"
             }
          }
       },
