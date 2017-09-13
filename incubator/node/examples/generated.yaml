@@ -1,0 +1,116 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: node-app
+  name: node-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        pod.beta.kubernetes.io/init-containers: |-
+          [
+                      {
+                        "name": "git-clone-app",
+                        "image": "{{ values.image }}",
+                        "imagePullPolicy": "{{ values.imagePullPolicy }}",
+                        "command": [ "/bin/sh", "-c" , "git clone {{ values.repository }} /app && git checkout {{ values.revision }}" ],
+                        "volumeMounts": [
+                          {
+                            "name": "app",
+                            "mountPath": "/app"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "npm-install",
+                        "image": "{{ values.image }}",
+                        "imagePullPolicy": "{{ values.imagePullPolicy }}",
+                        "command": [ "npm", "install" ],
+                        "volumeMounts": [
+                          {
+                            "name": "app",
+                            "mountPath": "/app"
+                          }
+                        ]
+                      }
+                    ]
+      labels:
+        app: node-app
+    spec:
+      containers:
+        - command:
+            - npm
+            - start
+          env:
+            - name: GIT_REPO
+              value: 'https://github.com/jbianquetti-nami/simple-node-app.git'
+          image: 'bitnami/node:8.4.0-r1'
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 180
+            timeoutSeconds: 5
+          name: node-app
+          ports:
+            - containerPort: 3000
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 3
+          resources:
+            requests:
+              cpu: 300m
+              memory: 512Mi
+          securityContext:
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /app
+              name: app
+            - mountPath: /app/data
+              name: data
+      volumes:
+        - emptyDir: {}
+          name: app
+        - emptyDir: {}
+          name: data
+        - {}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    volume.beta.kubernetes.io/storage-class: true
+  labels:
+    app: node-app
+  name: node-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: node-app
+  name: node-app
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  selector:
+    app: node-app
+  type: LoadBalancer
