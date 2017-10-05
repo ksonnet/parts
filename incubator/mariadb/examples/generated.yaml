@@ -9,6 +9,7 @@ metadata:
   labels:
     app: mariadb-app
   name: mariadb-app
+  namespace: dev-hoot
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -16,11 +17,13 @@ metadata:
   labels:
     app: mariadb-app
   name: mariadb-app
+  namespace: dev-hoot
 spec:
   template:
     metadata:
       labels:
         app: mariadb-app
+      namespace: dev-hoot
     spec:
       containers:
       - env:
@@ -28,7 +31,12 @@ spec:
           valueFrom:
             secretKeyRef:
               key: mariadb-root-password
-              name: mariadb-app
+              name: passwordSecret
+        - name: MARIADB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: mariadb-password
+              name: passwordSecret
         - name: MARIADB_USER
           value: ""
         - name: MARIADB_DATABASE
@@ -106,22 +114,25 @@ metadata:
   labels:
     app: mariadb-app
   name: mariadb-app
+  namespace: dev-hoot
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 8Gi
+  storageClass: '-'
 ---
 apiVersion: v1
 data:
-  mariadb-password: Ym9vdHM=
-  mariadb-root-password: YWxzb2Jvb3Rz
+  mariadb-password: bWFyaWFkYlBhc3N3b3Jk
+  mariadb-root-password: bWFyaWFSb290UGFzc3dvcmQ=
 kind: Secret
 metadata:
   labels:
     app: mariadb-app
   name: mariadb-app
+  namespace: dev-hoot
 type: Opaque
 ---
 apiVersion: v1

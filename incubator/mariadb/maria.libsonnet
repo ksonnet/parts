@@ -174,7 +174,7 @@ local deployment = k.extensions.v1beta1.deployment;
         }
       ],
 
-      local base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, claimName, labels, configMapName) =
+      local base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, existingClaim, labels, configMapName) =
         local metricsContainer =
           if !metricsEnabled then []
           else [
