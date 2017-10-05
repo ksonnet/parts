@@ -76,9 +76,7 @@ spec:
   ingress:
   - ports:
     - port: 9121
-  - from:
-    - podSelector: null
-    ports:
+  - ports:
     - port: 6379
 ---
 apiVersion: v1
