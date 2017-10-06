@@ -216,7 +216,7 @@ func emitReadme(schema *MixinSchema, prototypes []*prototypeInfo) {
 	fmt.Println("## Quickstart")
 	fmt.Println()
 
-	fmt.Println("*The following commands use the `io.ksonnet.pkg.simple-nginx` prototype to generate Kubernetes YAML for the nginx app, and then deploys it to your Kubernetes cluster.*")
+	fmt.Printf("*The following commands use the `%s` prototype to generate Kubernetes YAML for %s, and then deploys it to your Kubernetes cluster.*\n", schema.QuickStart.Prototype, schema.Name)
 	fmt.Println()
 	fmt.Println("First, create a cluster and install the ksonnet CLI (see root-level [README.md](rootReadme)).")
 	fmt.Println()
