@@ -34,7 +34,7 @@ local deployment = k.extensions.v1beta1.deployment;
         },
       },
 
-    secret(namespace, name, mariaRootPassword, mariadbPassword, labels={app:name},):: {
+    secret(namespace, name, mariaRootPassword, labels={app:name},):: {
       apiVersion: "v1",
       kind: "Secret",
       metadata: {
@@ -45,7 +45,6 @@ local deployment = k.extensions.v1beta1.deployment;
       type: "Opaque",
       data: {
          "mariadb-root-password": std.base64(mariaRootPassword),
-        "mariadb-password": std.base64(mariadbPassword),
       },
     },
 
@@ -135,7 +134,7 @@ local deployment = k.extensions.v1beta1.deployment;
           deployment.mixin.spec.template.spec.volumes(volume),
 
       nonPersistent(namespace, name, passwordSecretName, mariaConfig=defaults.mariaConfig, metricsEnabled=true, existingClaim=name, labels={app:name}, configMapName=name)::
-         base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, existingClaim, configMapName),
+         base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, existingClaim, labels, configMapName),
 
       local secure(passwordSecretName) = [
         {
@@ -174,7 +173,7 @@ local deployment = k.extensions.v1beta1.deployment;
         }
       ],
 
-      local base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, claimName, labels, configMapName) =
+      local base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, existingClaim, labels, configMapName) =
         local metricsContainer =
           if !metricsEnabled then []
           else [
