@@ -3,7 +3,7 @@ local service = k.core.v1.service.mixin;
 
 {
   parts:: {
-    service(namespace, name, metricsEnabled=true, externalIpArray=null, selector={app:name})::
+    service(namespace, name, metricsEnabled=false, externalIpArray=null, selector={app:name})::
       local defaults= {
         type: 'ClusterIP',
         port: 5432
@@ -104,7 +104,6 @@ local service = k.core.v1.service.mixin;
                 {
                   podSelector: {
                     matchLabels: {
-                      // TODO: this exists in the helm chart but we don't know why
                       [name + "-client"]: "true",
                     },
                   },
@@ -158,25 +157,25 @@ local service = k.core.v1.service.mixin;
         },
       },
 
-      persistent(namespace, name, pgConfig=defaults.postgresConfig, existingClaim=name, labels={app:name}, metricsEnabled=false):
+      persistent(namespace, name, pgConfig=defaults.postgresConfig, metricsEnabled=false, existingClaim=name, labels={app:name}):
         local volume = {
           name: "data",
           persistentVolumeClaim: {
             claimName: existingClaim
           }
         };
-        base(namespace, name, pgConfig, existingClaim, labels, metricsEnabled) +
+        base(namespace, name, pgConfig, metricsEnabled, existingClaim, labels) +
         k.extensions.v1beta1.deployment.mixin.spec.template.spec.volumes(volume),
 
-      nonPersistent(namespace, name, pgConfig=defaults.postgresConfig, existingClaim=name, labels={app:name}, metricsEnabled=false)::
+      nonPersistent(namespace, name, pgConfig=defaults.postgresConfig, metricsEnabled=false, existingClaim=name, labels={app:name})::
         local volume = {
           name: "data",
           emptyDir: {}
         };
-        base(namespace, name, pgConfig, existingClaim, labels, metricsEnabled) +
+        base(namespace, name, pgConfig, metricsEnabled, existingClaim, labels) +
         k.extensions.v1beta1.deployment.mixin.spec.template.spec.volumes(volume),
 
-      local base(namespace, name, pgConfig, existingClaim, labels, metricsEnabled) =
+      local base(namespace, name, pgConfig, metricsEnabled, existingClaim, labels) =
         local metricsContainer = [
           {
             name: "metrics",
