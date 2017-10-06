@@ -1,0 +1,33 @@
+{
+  "name": "redis-persistent",
+  "version": "0.0.1",
+  "description": Apache Tomcat, or Tomcat, is an open-source web server and servlet container. This
+  // package deploys a tomcat container, backed by a mounted persisitent volume, a service and secret
+  //  to your cluster,
+  "author": "ksonnet team <ksonnet-help@heptio.com>",
+  "contributors": [
+    {
+    "name": "Tehut Getahun",
+    "email": "tehut@heptio.com"
+    },
+    {
+    "name": "Tamiko Terada",
+    "email": "tamiko@heptio.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ksonnet/mixins"
+  },
+  "bugs": {
+    "url": "https://github.com/ksonnet/mixins/issues"
+  },
+  "keywords": [
+    "tomcat",
+    "stateless",
+    "server",
+    "apache",
+    "serverlet"
+  ],
+  "license": "Apache 2.0"
+}
