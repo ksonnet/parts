@@ -188,6 +188,10 @@ be indented. For example:
 		firstPass = false
 	}
 
+	if err := pinfo.add(openTag, openText.String()); !firstPass && err != nil {
+		return nil, err
+	}
+
 	if pinfo.name == "" || pinfo.description == "" {
 		return nil, fmt.Errorf("Invalid prototype specification, all fields are required. Object:\n%s", pinfo)
 	}
@@ -309,7 +313,6 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(os.Args)
 	protos := []*prototypeInfo{}
 	for _, arg := range os.Args[2:] {
 		protoData, err := ioutil.ReadFile(arg)
