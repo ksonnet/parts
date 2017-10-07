@@ -2,7 +2,7 @@ local k = import 'ksonnet.beta.2/k.libsonnet';
 
 {
   parts:: {
-    pbd(namespace, name, pdbMinAvailable=3, selector={matchLabels: {app: name}}):: {
+    pdb(namespace, name, pdbMinAvailable=3, selector={matchLabels: {app: name}}):: {
       apiVersion: "policy/v1beta1",
       kind: "PodDisruptionBudget",
       metadata: {
