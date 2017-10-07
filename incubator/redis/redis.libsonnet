@@ -10,47 +10,36 @@ local networkSpec = networkPolicy.mixin.spec;
   parts:: {
     networkPolicy:: {
       local defaults = {
-        name: "redis-app",
         inboundPort: {
           ports: [{port:6379}]
         },
       },
 
-      allowExternal(namespace,allowInbound,metricEnabled=false)::
-        base(namespace, metricEnabled) +
+      allowExternal(namespace, name, allowInbound, metricEnabled, podSelector=null, labels={app:name},)::
+        base(namespace, name, metricEnabled, podSelector, labels) +
         networkSpec.ingress(defaults.inboundPort),
 
-      denyExternal(namespace,allowInbound,metricEnabled=false)::
+      denyExternal(namespace, name, allowInbound, metricEnabled, podSelector={matchLabels:{[name + "-client"]: "true"}}, labels={app:name}, )::
         local ingressRule = defaults.inboundPort + {
           from: [
             {
-              podSelector: {
-                matchLabels: {
-                  [defaults.name + "-client"]: "true"
-                }
-              }
+              podSelector: podSelector
             },
           ],
         };
-        base(namespace, metricEnabled)+
+        base(namespace, name, metricEnabled, podSelector, labels)+
         networkSpec.ingress(ingressRule),
 
-      local base(namespace, metricEnabled) = {
+      local base(namespace, name, metricEnabled, podSelector, labels) = {
         kind: "NetworkPolicy",
         apiVersion: "networking.k8s.io/v1",
         metadata: {
-          name: defaults.name,
+          name: name,
           namespace: namespace,
-          labels: {
-            app: defaults.name,
-          },
+          labels: labels,
         },
         spec: {
-          podSelector: {
-            matchLabels: {
-              app: defaults.name,
-            }
-          },
+          [if podSelector != null then "podSelector"]: podSelector,
           [if metricEnabled then "ingress"]: [
             {
               # Allow prometheus scrapes for metrics
@@ -63,9 +52,8 @@ local networkSpec = networkPolicy.mixin.spec;
       },
     },
 
-    secret(namespace, redisPassword)::
+    secret(namespace, name, redisPassword, labels={app:name})::
       local defaults = {
-        name: "redis-app",
         usePassword: true,
       };
 
@@ -73,11 +61,9 @@ local networkSpec = networkPolicy.mixin.spec;
         apiVersion: "v1",
         kind: "Secret",
         metadata: {
-          name: defaults.name,
+          name: name,
           namespace: namespace,
-          labels: {
-            app: defaults.name,
-          },
+          labels: labels,
         },
         type: "Opaque",
         data: {
@@ -85,28 +71,25 @@ local networkSpec = networkPolicy.mixin.spec;
         },
       },
 
-    svc:: {
-      local defaults = {
-        name: "redis-app"
-      },
+    svc::{
+      metricDisabled(namespace,name, labels={app:name}, selector={app:name})::
+      svcBase(namespace,name, labels, selector),
 
-      metricEnabled(namespace)::
+      metricEnabled(namespace, name, labels={app:name}, selector={app:name})::
         local annotations = {
           "prometheus.io/scrape": "true",
           "prometheus.io/port": "9121"
         };
-        svcBase(namespace) +
+        svcBase(namespace, name, labels, selector) +
           service.mixin.metadata.annotations(annotations),
 
-      local svcBase(namespace)= {
+      local svcBase(namespace, name, labels, selector)= {
         apiVersion: "v1",
         kind: "Service",
         metadata: {
-          name: defaults.name,
+          name: name,
           namespace: namespace,
-          labels: {
-            app: defaults.name,
-          },
+          labels: labels,
         },
         spec: {
           ports: [
@@ -116,35 +99,30 @@ local networkSpec = networkPolicy.mixin.spec;
               targetPort: "redis",
             }
           ],
-          selector: {
-            app: defaults.name
-          },
+          selector: selector,
         }
       },
     },
 
-    pvc:: {
+    pvc(namespace, name, storageClass="-", labels={app:name})::
       local defaults = {
-        name: "redis-app",
         accessMode: "ReadWriteOnce",
         size: '8Gi'
-      },
+      };
 
-      pvcBase(namespace, storageClassName = "-"):: {
+      {
         kind: "PersistentVolumeClaim",
         apiVersion: "v1",
         metadata: {
-          name: defaults.name,
+          name: name,
           namespace: namespace,
-          labels: {
-            app: defaults.name,
-          }
+          labels: labels
         },
         spec: {
           accessModes: [
             defaults.accessMode,
           ],
-          storageClassName: storageClassName,
+          storageClassName: storageClass,
           resources: {
             requests: {
               storage: defaults.size,
@@ -152,11 +130,9 @@ local networkSpec = networkPolicy.mixin.spec;
           },
         },
       },
-    },
 
     deployment:: {
       local defaults = {
-        name:: "redis-app",
         image:: "bitnami/redis:3.2.9-r2",
         imagePullPolicy:: "IfNotPresent",
         resources:: {
@@ -176,33 +152,33 @@ local networkSpec = networkPolicy.mixin.spec;
         },
       },
 
-      nonPersistent(namespace, secretName, metricEnabled=false)::
+      nonPersistent(namespace, name, secretName, metricEnabled=false, labels={app:name},):
         local volume = {
           name: "redis-data",
           emptyDir: {}
         };
-        base(namespace, secretName, metricEnabled) +
+        base(namespace, name, secretName, metricEnabled, labels) +
         deployment.mixin.spec.template.spec.volumes(volume) +
         deployment.mapContainersWithName(
-          [defaults.name],
+          [name],
           function(c) c + container.volumeMounts(defaults.dataMount)
         ),
 
-      persistent(namespace, secretName, metricEnabled=false, claimName=defaults.name)::
+      persistent(namespace, name, secretName, metricEnabled=false, claimName=name, labels={app:name})::
         local volume = {
           name: "redis-data",
           persistentVolumeClaim: {
             claimName: claimName
           }
         };
-        base(namespace, secretName, metricEnabled) +
+        base(namespace, name, secretName, metricEnabled, labels) +
         deployment.mixin.spec.template.spec.volumes(volume) +
         deployment.mapContainersWithName(
-          [defaults.name],
+          [name],
           function(c) c + container.volumeMounts(defaults.dataMount)
         ),
 
-      local base(namespace, secretName, metricsEnabled) =
+      local base(namespace, name, secretName, metricsEnabled, labels) =
         local metricsContainer =
           if !metricsEnabled then []
           else [{
@@ -212,7 +188,7 @@ local networkSpec = networkPolicy.mixin.spec;
             env: [
               {
                 name: "REDIS_ALIAS",
-                value: defaults.name,
+                value: name,
               }
             ] + if secretName == null then []
             else [
@@ -220,7 +196,7 @@ local networkSpec = networkPolicy.mixin.spec;
                 name: "REDIS_PASSWORD",
                 valueFrom: {
                   secretKeyRef: {
-                    name: defaults.name,
+                    name: name,
                     key: "redis-password",
                   }
                 },
@@ -237,23 +213,19 @@ local networkSpec = networkPolicy.mixin.spec;
         apiVersion: "extensions/v1beta1",
         kind: "Deployment",
         metadata: {
-          name: defaults.name,
+          name: name,
           namespace: namespace,
-          labels: {
-            app: defaults.name,
-          },
+          labels: labels,
         },
         spec: {
           template: {
             metadata: {
-              labels: {
-                app: defaults.name,
-              }
+              labels: labels
             },
             spec: {
               containers: [
                 {
-                  name: defaults.name,
+                  name: name,
                   image: defaults.image,
                   imagePullPolicy: defaults.imagePullPolicy,
                   env: [

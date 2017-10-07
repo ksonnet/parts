@@ -76,11 +76,10 @@ spec:
   ingress:
   - ports:
     - port: 9121
-  - ports:
+  - from:
+    - podSelector: null
+    ports:
     - port: 6379
-  podSelector:
-    matchLabels:
-      app: redis-app
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
