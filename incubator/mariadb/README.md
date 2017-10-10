@@ -1,10 +1,10 @@
 # mariadb
 
-> MariaDB is an open source relational database it provides a SQL interface for accessing data. The latest versions of MariaDB also include GIS and JSON features. This package deploys a maria container, a service and secret to your cluster
+> MariaDB is an open source relational database it provides a SQL interface for accessing data. This library makes it easy to deploy a Mariadb app to your Kubernetes cluster using ksonnet prototypes. Each prototype is made up of a subset of the following preconfigured components: deployment, persistent volume claim, service, secret, and configMap.
 
 * [Quickstart](#quickstart)
 * [Using Prototypes](#using-prototypes)
-  * [io.ksonnet.pkg.stateless-maria](#io.ksonnet.pkg.stateless-maria)
+  * [io.ksonnet.pkg.persistent-maria](#io.ksonnet.pkg.persistent-maria)
 
 ## Quickstart
 
@@ -20,9 +20,9 @@ Finally, in the ksonnet application directory, run the following:
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.simple-mariadb mariadb \
-  --name mariadb \
   --namespace default \
-  --mariaRootPassword boot
+  --mariaRootPassword boot \
+  --name mariadb
 
 # Apply to server.
 $ ks apply -f mariadb.jsonnet
@@ -36,17 +36,18 @@ This library provides a set of pre-fabricated "flavors" (or "distributions") of 
 
 These prototypes, as well as how to use them, are enumerated below.
 
-### io.ksonnet.pkg.stateless-maria
+### io.ksonnet.pkg.persistent-maria
 
-Deploy stateless instance of MariaDB. This is NOT backed by a persistent volume.The MariaDB container is deployed using a deployment and exposed to the
-network as a service. The password is stored as a secret.
+MariaDB is an open source relational database it provides a SQL interface foraccessing data. The latest versions of MariaDB also include GIS and JSON
+features. This package deploys a maria container backed by a mounted
+persistent volume claim, a secret, and service to expose your deployment.
 
 #### Example
 
 ```shell
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
-$ ks prototype use io.ksonnet.pkg.stateless-maria mariadb \
+$ ks prototype use io.ksonnet.pkg.persistent-maria mariadb \
   --namespace YOUR_NAMESPACE_HERE \
   --name YOUR_NAME_HERE \
   --mariaRootPassword YOUR_MARIAROOTPASSWORD_HERE
