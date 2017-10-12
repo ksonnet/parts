@@ -3,7 +3,7 @@ local deployment = k.extensions.v1beta1.deployment;
 
 {
   parts:: {
-    svc(namespace, name, metricsEnabled=true, labels={app:name}, selector={app:name})::
+    svc(namespace, name, metricsEnabled=false, labels={app:name}, selector={app:name})::
       {
         apiVersion: "v1",
         kind: "Service",
@@ -88,7 +88,7 @@ local deployment = k.extensions.v1beta1.deployment;
               storage: defaults.size,
             },
           },
-          [if storageClassName != null then "storageClass"]:storageClassName,
+           storageClass:storageClassName,
         },
       },
 
@@ -123,7 +123,7 @@ local deployment = k.extensions.v1beta1.deployment;
         },
       },
 
-      persistent(namespace, name, passwordSecretName, mariaConfig=defaults.mariaConfig, metricsEnabled=true, existingClaim=name, labels={app:name}, configMapName=name)::
+      persistent(namespace, name, passwordSecretName, mariaConfig=defaults.mariaConfig, metricsEnabled=false, existingClaim=name, labels={app:name}, configMapName=name)::
         local volume = {
           name: "data",
           persistentVolumeClaim: {
@@ -133,7 +133,7 @@ local deployment = k.extensions.v1beta1.deployment;
         base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, existingClaim, labels, configMapName) +
           deployment.mixin.spec.template.spec.volumes(volume),
 
-      nonPersistent(namespace, name, passwordSecretName, mariaConfig=defaults.mariaConfig, metricsEnabled=true, existingClaim=name, labels={app:name}, configMapName=name)::
+      nonPersistent(namespace, name, passwordSecretName, mariaConfig=defaults.mariaConfig, metricsEnabled=false, existingClaim=name, labels={app:name}, configMapName=name)::
          base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, existingClaim, labels, configMapName),
 
       local secure(passwordSecretName) = [
