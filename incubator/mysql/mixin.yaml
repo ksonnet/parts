@@ -1,7 +1,7 @@
 {
   "name": "mysql",
   "version": "0.0.1",
-  "description": "MySQL is one of the most popular database servers in the world. Notable users include Wikipedia, Facebook and Google.",
+  "description": "This mySQL mixin library contains Ksonnet proottypes of preconfigured components to help you easily deploy a mySQL database to your Kubernetes cluster.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
     {
