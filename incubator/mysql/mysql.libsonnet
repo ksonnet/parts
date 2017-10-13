@@ -70,8 +70,7 @@ local k = import 'ksonnet.beta.2/k.libsonnet';
         },
         // I chose this route to avoid passing both storageClass and storageClassName
         // it does feel a bit hacky and I'm willing to change it
-      [if storageClassName != null then "storageClass"]:
-        storageClassName,
+      storageClass: storageClassName,
       },
     },
 
@@ -108,15 +107,19 @@ local k = import 'ksonnet.beta.2/k.libsonnet';
             cpu: "100m",
           },
         },
+        config: {
+          user: "",
+          db: ""
+        },
       },
 
-      persistent(namespace, name, secretKeyName, claimName, mysqlUser="", mysqlDatabase="", mysqlAllowEmptyPassword=false, subPath=null, persistenceEnabled=true)::
-        base(namespace, name, secretKeyName, claimName, mysqlUser, mysqlDatabase,  mysqlAllowEmptyPassword, subPath, persistenceEnabled),
+      persistent(namespace, name, secretKeyName, claimName, mysqlConfig=defaults.config, mysqlAllowEmptyPassword=false, subPath=null, persistenceEnabled=true)::
+        base(namespace, name, secretKeyName, claimName, mysqlConfig,  mysqlAllowEmptyPassword, subPath, persistenceEnabled),
 
-      nonpersistent(namespace, name, secretKeyName, claimName, mysqlUser, mysqlDatabase, mysqlAllowEmptyPassword=false, subPath=null, persistenceEnabled=false)::
-        base(namespace, name, secretKeyName,  claimName, mysqlUser, mysqlDatabase, mysqlAllowEmptyPassword, subPath, persistenceEnabled),
+      nonpersistent(namespace, name, secretKeyName, claimName, mysqlConfig=defaults.config, mysqlAllowEmptyPassword=false, subPath=null, persistenceEnabled=false)::
+        base(namespace, name, secretKeyName,  claimName, mysqlConfig, mysqlAllowEmptyPassword, subPath, persistenceEnabled),
 
-      local base(namespace, name, secretKeyName, claimName, mysqlUser, mysqlDatabase,  mysqlAllowEmptyPassword, subPath, persistenceEnabled)= {
+      local base(namespace, name, secretKeyName, claimName, mysqlConfig,  mysqlAllowEmptyPassword, subPath, persistenceEnabled)= {
         apiVersion: "extensions/v1beta1",
           kind: "Deployment",
           metadata: {
@@ -184,11 +187,11 @@ local k = import 'ksonnet.beta.2/k.libsonnet';
                       ] + [
                         {
                           name: "MYSQL_USER",
-                          value: if mysqlUser != null then mysqlUser else "",
+                          value: mysqlConfig.user,
                         },
                         {
                           name: "MYSQL_DATABASE",
-                          value: if mysqlDatabase != null then mysqlDatabase else "",
+                          value: mysqlConfig.db,
                         },
                       ],
                     ports: [
