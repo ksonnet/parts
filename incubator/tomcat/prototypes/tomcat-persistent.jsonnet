@@ -1,12 +1,12 @@
 // @apiVersion 0.1
 // @name io.ksonnet.pkg.persistent-tomcat
-// @description Deploys a stateful Tomcat server, backed by a persistent volume. Server is
-//   deployed using a Kubernetes deployment, and exposed to the network using a
-//   service. The password is stored as a secret.
+// @description When generated and applied this package will create a secret,
+//   a deployment, mount a persistent volume claim, & expose the deployment via a
+//   service.
 // @param namespace string Namespace in which to put the application
 // @param name string Name to give to each of the components
 // @param tomcatUser string Username for tomcat manager page, if not specified tomcat will not assign users
-// @param tomcatPassword string Tomcat manager page password, to be encrypted and included in Secret API object
+// @param tomcatPassword string Tomcat manager page password, to be encrypted and included in Secret Object
 
 local k = import 'ksonnet.beta.2/k.libsonnet';
 local tc = import 'incubator/tomcat/tomcat.libsonnet';
