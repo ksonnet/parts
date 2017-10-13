@@ -157,25 +157,25 @@ local service = k.core.v1.service.mixin;
         },
       },
 
-      persistent(namespace, name, pgConfig=defaults.postgresConfig, metricsEnabled=false, existingClaim=name, labels={app:name}):
+      persistent(namespace, name, passwordSecretName, pgConfig=defaults.postgresConfig, metricsEnabled=false, existingClaim=name, labels={app:name}):
         local volume = {
           name: "data",
           persistentVolumeClaim: {
             claimName: existingClaim
           }
         };
-        base(namespace, name, pgConfig, metricsEnabled, existingClaim, labels) +
+        base(namespace, name, passwordSecretName, pgConfig, metricsEnabled, existingClaim, labels) +
         k.extensions.v1beta1.deployment.mixin.spec.template.spec.volumes(volume),
 
-      nonPersistent(namespace, name, pgConfig=defaults.postgresConfig, metricsEnabled=false, existingClaim=name, labels={app:name})::
+      nonPersistent(namespace, name, passwordSecretName, pgConfig=defaults.postgresConfig, metricsEnabled=false, existingClaim=name, labels={app:name})::
         local volume = {
           name: "data",
           emptyDir: {}
         };
-        base(namespace, name, pgConfig, metricsEnabled, existingClaim, labels) +
+        base(namespace, name, passwordSecretName, pgConfig, metricsEnabled, existingClaim, labels) +
         k.extensions.v1beta1.deployment.mixin.spec.template.spec.volumes(volume),
 
-      local base(namespace, name, pgConfig, metricsEnabled, existingClaim, labels) =
+      local base(namespace, name, passwordSecretName, pgConfig, metricsEnabled, existingClaim, labels) =
         local metricsContainer = [
           {
             name: "metrics",
@@ -247,7 +247,7 @@ local service = k.core.v1.service.mixin;
                         name: "POSTGRES_PASSWORD",
                         valueFrom: {
                           secretKeyRef: {
-                            name: name,
+                            name: passwordSecretName,
                             key: "postgres-password"
                           },
                         },
