@@ -1,11 +1,10 @@
 // @apiVersion 0.0.1
 // @name io.ksonnet.pkg.nginx-simple
-// @description Deploys a simple, stateless nginx server with server blocks (roughly equivalent
-//   to nginx virtual hosts). The nginx container is deployed using a
-//   Kubernetes deployment, and is exposed to a network with a service.
-// @param namespace string Namespace in which to put the application
-// @param name string Name to give to each of the components
-
+// @description When generated and applied, this prototype deploys a stateless nginx web
+//   server. The nginx container is deployed using a Kubernetes deployment, and
+//   is exposed to a network through a service.
+// @param namespace string Namespace to specify destination within cluster
+// @param name string Name of app to attach as identifier to all parts
 
 local k = import 'ksonnet.beta.2/k.libsonnet';
 local nginx = import 'incubator/nginx/nginx.libsonnet';

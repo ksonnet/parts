@@ -115,25 +115,7 @@ local container = deployment.mixin.spec.template.spec.containersType;
       },
     },
 
-    serverBlockConfigMap(namespace, name):: {
-      local defaults = {
-        // example PHP-FPM vhost
-        vhost:
-        |||
-        server {
-          listen 0.0.0.0:80;
-          root /app;
-          location / {
-            index index.html index.php;
-          }
-          location ~ \.php$ {
-            fastcgi_pass phpfpm-server:9000;
-            fastcgi_index index.php;
-            include fastcgi.conf;
-          }
-        }
-      |||
-      },
+    serverBlockConfigMap(namespace, name, sbConfig):: {
       apiVersion: "v1",
       kind: "ConfigMap",
       metadata: {
@@ -142,7 +124,7 @@ local container = deployment.mixin.spec.template.spec.containersType;
         labels: { app: name },
       },
       data: {
-        "vhost.conf": defaults.vhost,
+        "vhost.conf": sbConfig,
       },
     },
   },
