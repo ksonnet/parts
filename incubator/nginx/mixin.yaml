@@ -1,7 +1,7 @@
 {
   "name": "nginx",
   "version": "0.0.1",
-  "description": "TODO: YOUR DESCRIPTION HERE",
+  "description": "This library makes it easy to deploy a Nginx Server to your Kubernetes cluster using ksonnet prototypes. Each prototype is made up of a subset of the following preconfigured components: deployment, service, and network policy.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
     {
