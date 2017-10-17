@@ -1,39 +1,31 @@
-{
-  "name": "mariadb",
-  "version": "0.0.1",
-  "description": "MariaDB is an open source relational database it provides a SQL interface for accessing data. The latest versions of MariaDB also include GIS and JSON features. This package deploys a maria container, a service and secret to your cluster",
-  "author": "ksonnet team <ksonnet-help@heptio.com>",
-  "contributors": [
-    {
-    "name": "Tehut",
-    "email": "tehut@heptio.com"
-    },
-    {
-    "name": "Tamiko",
-    "email": "tamiko@heptio.com"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ksonnet/mixins"
-  },
-  "bugs": {
-    "url": "https://github.com/ksonnet/mixins/issues"
-  },
-  "keywords": [
-    "mariadb",
-    "database",
-    "relational"
-  ],
-  "quickStart": {
-    "prototype": "io.ksonnet.pkg.simple-mariadb",
-    "componentName": "mariadb",
-    "flags": {
-      "name": "mariadb",
-      "namespace": "default",
-      "mariaRootPassword": "boot"
-    },
-    "comment": "Run a simple mariadb database"
-  },
-  "license": "Apache 2.0"
-}
+name: mariadb
+version: 0.0.1
+link: https://mariadb.org/
+output: MariaDB
+description: >
+  MariaDB is an open-source relational database that supports SQL.
+  The latest versions of MariaDB also include GIS and JSON features.
+author: ksonnet team <ksonnet-help@heptio.com>
+contributors:
+- name: Tehut
+  email: tehut@heptio.com
+- name: Tamiko
+  email: tamiko@heptio.com
+repository:
+  type: git
+  url: https://github.com/ksonnet/mixins
+bugs:
+  url: https://github.com/ksonnet/mixins/issues
+keywords:
+- mariadb
+- database
+- relational
+quickStart:
+  prototype: io.ksonnet.pkg.maria-stateless
+  componentName: mariadb
+  flags:
+    name: mariadb
+    namespace: default
+    mariaRootPassword: boots
+  comment: Run a simple, stateless MariaDB database
+license: Apache 2.0

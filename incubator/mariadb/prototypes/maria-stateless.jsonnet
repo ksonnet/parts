@@ -1,11 +1,14 @@
 // @apiVersion 0.1
 // @name io.ksonnet.pkg.stateless-maria
-// @description Deploy stateless instance of MariaDB. This is NOT backed by a persistent volume.
-//   The MariaDB container is deployed using a deployment and exposed to the
-//   network as a service. The password is stored as a secret.
-// @param namespace string Namespace in which to put the application
-// @param name string Metadata name for each of the deployment components
-// @param mariaRootPassword string Password for root user
+// @description deploys a stateless instance of MariaDB. *NOTE: This is NOT
+//   backed by a PersistentVolumeClaim.* The MariaDB container runs as a
+//   Deployment, and is exposed to the network as a Service. The password is
+//   stored as a Secret.
+// @param namespace string Namespace (metadata) that the MariaDB resources are
+//   created under
+// @param name string Name (metadata) to identify all resources defined by this
+//   prototype
+// @param mariaRootPassword string Password for the root user
 
 local k = import 'ksonnet.beta.2/k.libsonnet';
 local maria = import 'incubator/mariadb/maria.libsonnet';
@@ -19,4 +22,3 @@ k.core.v1.list.new([
   maria.parts.secret(namespace, name, mariaRootPassword),
   maria.parts.svc(namespace, name)
   ])
-

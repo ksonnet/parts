@@ -1,0 +1,31 @@
+name: postgres
+version: 0.0.1
+link: https://www.postgresql.org
+output: PostgreSQL
+description: PostgreSQL is an open source relational database system (RDBMS)
+  that supports SQL. It is designed with an emphasis on extensibility and
+  compliance to the SQL standard.
+author: ksonnet team <ksonnet-help@heptio.com>
+contributors:
+- name: Tehut Getahun
+  email: tehut@heptio.com
+- name: Tamiko Terada
+  email: tamiko@heptio.com
+repository:
+  type: git
+  url: https://github.com/ksonnet/mixins
+bugs:
+  url: https://github.com/ksonnet/mixins/issues
+keywords:
+- postgres
+- postgresql
+- database
+quickStart:
+  prototype: io.ksonnet.pkg.postgres-simple
+  componentName: postgres
+  flags:
+    name: postgres
+    namespace: default
+    password: boots
+  comment: Run a simple instance of the postgres database
+license: Apache 2.0

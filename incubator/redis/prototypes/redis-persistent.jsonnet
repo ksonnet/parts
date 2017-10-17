@@ -1,11 +1,13 @@
 // @apiVersion 0.1
 // @name io.ksonnet.pkg.redis-persistent
-// @description Redis backed by a persistent volume claim. Redis is deployed using a Kubernetes
-//   deployment, exposed to the network with a service, with a password stored
-//   in a secret.
-// @param namespace string Namespace in which to put the application
-// @param name string Name to give to each of the components
-// @param redisPassword string User password to supply to redis
+// @description deploys a version of Redis that is backed by a
+//   PersistentVolumeClaim. It runs as a Deployment, and is exposed to the
+//   network with a Service. The password is stored in a Secret.
+// @param namespace string Namespace (metadata) that the Redis resources are
+//   created under
+// @param name string Name (metadata) to identify all resources defined by this
+//   prototype
+// @param redisPassword string User password to access Redis
 
 local k = import 'ksonnet.beta.2/k.libsonnet';
 local redis = import 'incubator/redis/redis.libsonnet';
