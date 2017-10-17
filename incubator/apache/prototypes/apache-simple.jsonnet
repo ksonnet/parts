@@ -1,9 +1,11 @@
 // @apiVersion 0.0.1
 // @name io.ksonnet.pkg.apache-simple
-// @description Apache HTTP Server. Apache is deployed using a deployment, and exposed to the
-//   network using a service.
-// @param namespace string Namespace to divvy up your cluster; default is 'default'
-// @param name string Name to identify all Kubernetes objects in this prototype
+// @description runs Apache HTTP Server as a Deployment, and exposes it to
+//   the network using a Service.
+// @param namespace string Namespace (metadata) that the Apache resources are
+//   created under; default is 'default'
+// @param name string Name (metadata) to identify all resources defined by this
+//   prototype
 
 local k = import 'ksonnet.beta.2/k.libsonnet';
 local apache = import 'incubator/apache/apache.libsonnet';

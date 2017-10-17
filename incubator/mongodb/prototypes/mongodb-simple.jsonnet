@@ -1,12 +1,14 @@
 // @apiVersion 0.0.1
 // @name io.ksonnet.pkg.mongodb-simple
-// @description Deploys a simple instance of mongodb, backed by a persistent volume claim. The
-//   mongodb container is deployed using a Kubernetes deployment, and exposed
-//   to the network using a service. Passwords are stored in a secret.
-// @param namespace string Namespace to specify destination in cluster; default is 'default'
-// @param name string Name of app to attach as identifier to all components
-// @param rootPassword string RootPassword for db admin password
-// @param password string Password for db user password
+// @description deploys a simple instance of MongoDB. It runs as a Deployment
+//   backed by a PersistentVolumeClaim, and is exposed to the network using a
+//   Service. Passwords are stored in a Secret.
+// @param namespace string Namespace (metadata) that the MongoDB resources
+//   are created under
+// @param name string Name (metadata) to identify all resources defined by this
+//   prototype
+// @param rootPassword string Password for the root user
+// @param password string Password for new user
 
 local k = import 'ksonnet.beta.2/k.libsonnet';
 local mongo = import 'incubator/mongodb/mongodb.libsonnet';

@@ -1,0 +1,33 @@
+name: nodejs
+version: 0.0.1
+link: https://nodejs.org
+output: a NodeJS app
+description: >
+  NodeJS is a JavaScript runtime built on Chrome's V8 JavaScript engine, and
+  is designed to be lightweight and efficient. To that end, it uses an
+  event-driven, non-blcoking I/O model. NodeJS also has a large ecosystem of
+  open-source packages, which can be managed with the npm tool.
+author: ksonnet team <ksonnet-help@heptio.com>
+contributors:
+- name: Tehut Getahun
+  email: tehut@heptio.com
+- name: Tamiko Terada
+  email: tamiko@heptio.com
+repository:
+  type: git
+  url: https://github.com/ksonnet/mixins
+bugs:
+  url: https://github.com/ksonnet/mixins/issues
+keywords:
+- nodejs
+- node
+- server
+- javascript
+quickStart:
+  prototype: io.ksonnet.pkg.nodejs-simple
+  componentName: nodejs
+  flags:
+    name: nodejs
+    namespace: default
+  comment: Run a simple NodeJS app
+license: Apache 2.0

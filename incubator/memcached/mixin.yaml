@@ -1,0 +1,31 @@
+name: memcached
+version: 0.0.1
+link: https://memcached.org/
+output: Memcached
+description: >
+  Memcached is an in-memory K-V store for small chunks of arbitrary
+  data (strings, objects). It is used to temporarily store results of queries
+  such as database calls, API calls, or page rendering.
+author: ksonnet team <ksonnet-help@heptio.com>
+contributors:
+- name: Tehut Getahun
+  email: tehut@heptio.com
+- name: Tamiko Terada
+  email: tamiko@heptio.com
+repository:
+  type: git
+  url: https://github.com/ksonnet/mixins
+bugs:
+  url: https://github.com/ksonnet/mixins/issues
+keywords:
+- memcached
+- database
+- cache
+quickStart:
+  prototype: io.ksonnet.pkg.memcached-simple
+  componentName: memcached
+  flags:
+    name: memcached
+    namespace: default
+  comment: Run a simple Memcached instance
+license: Apache 2.0

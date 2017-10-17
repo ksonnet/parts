@@ -1,0 +1,29 @@
+name: apache
+version: 0.0.1
+link: https://httpd.apache.org/
+output: an Apache server
+description: >
+  Apache is a popular, open-source HTTP server.
+author: ksonnet team <ksonnet-help@heptio.com>
+contributors:
+- name: Tehut Getahun
+  email: tehut@heptio.com
+- name: Tamiko Terada
+  email: tamiko@heptio.com
+repository:
+  type: git
+  url: https://github.com/ksonnet/mixins
+bugs:
+  url: https://github.com/ksonnet/mixins/issues
+keywords:
+- apache
+- server
+- http
+quickStart:
+  prototype: io.ksonnet.pkg.apache-simple
+  componentName: apache
+  flags:
+    name: apache
+    namespace: default
+  comment: Run a simple Apache server
+license: Apache 2.0

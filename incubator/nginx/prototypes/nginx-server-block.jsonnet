@@ -1,10 +1,12 @@
 // @apiVersion 0.0.1
 // @name io.ksonnet.pkg.nginx-server-block
-// @description Deploys a simple, stateless nginx server with server blocks (roughly equivalent
-//   to nginx virtual hosts). The nginx container is deployed using a
-//   Kubernetes deployment, and is exposed to a network with a service.
-// @param namespace string Namespace in which to put the application
-// @param name string Name to give to all components.
+// @description deploys a simple, stateless nginx server *with server blocks*
+//   (roughly equivalent to nginx virtual hosts). The nginx server runs as a
+//   Deployment, and is exposed to the network with a Service.
+// @param namespace string Namespace (metadata) that the nginx resources are
+//   created under
+// @param name string Name (metadata) to identify all resources defined by this
+//   prototype
 
 // TODO: How should the ServerBlockConf be exposed to the user? Not quite sure what the default does except for setting web server to port 80.
 
