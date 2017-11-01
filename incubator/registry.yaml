@@ -1,0 +1,10 @@
+{
+  "apiVersion": "0.1",
+  "kind": "ksonnet.io/registry",
+  "libraries": {
+    "nginx": {
+      "version": "test-reg",
+      "path": "nginx"
+    }
+  }
+}

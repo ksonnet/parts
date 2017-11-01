@@ -1,6 +1,7 @@
 {
   "name": "nginx",
-  "version": "0.0.1",
+  "apiVersion": "0.0.1",
+  "kind": "ksonnet.io/parts",
   "description": "TODO: YOUR DESCRIPTION HERE",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
