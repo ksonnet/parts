@@ -5,6 +5,10 @@
     "nginx": {
       "version": "test-reg",
       "path": "nginx"
+    },
+    "redis": {
+      "version": "test-reg",
+      "path": "redis",
     }
   }
 }
