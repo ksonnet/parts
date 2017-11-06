@@ -8,7 +8,7 @@
     },
     "redis": {
       "version": "test-reg",
-      "path": "redis",
+      "path": "redis"
     }
   }
 }
