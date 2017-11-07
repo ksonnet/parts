@@ -33,7 +33,7 @@
       "namespace": "default",
       "password": "boots"
     },
-    "comment": "Run a simple redis isntance backed by a persistent volume"
+    "comment": "Run a simple redis instance backed by a persistent volume"
   },
   "license": "Apache 2.0"
 }
