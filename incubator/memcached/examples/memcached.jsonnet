@@ -1,4 +1,4 @@
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local memcached = import '../memcached.libsonnet';
 
 local myNamespace = "dev-alex";

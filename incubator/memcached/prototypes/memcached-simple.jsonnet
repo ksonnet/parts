@@ -8,7 +8,7 @@
 
 // TODO: Add MaxItemMemory=64 as a param like the k8s/charts?
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local memcached = import 'incubator/memcached/memcached.libsonnet';
 
 local namespace = import 'param://namespace';

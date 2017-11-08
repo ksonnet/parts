@@ -15,7 +15,7 @@
 // NOTE: For these imports you must invoke the Jsonnet CLI with -J
 // flags pointing at (1) the ksonnet library root, and (2) the root
 // of the mixins repository.
-local k = import "ksonnet.beta.2/k.libsonnet";
+local k = import "k.libsonnet";
 local honeycomb = import "incubator/honeycomb-agent/honeycomb-agent.libsonnet";
 
 // Destructure imports.

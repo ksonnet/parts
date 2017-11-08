@@ -5,7 +5,7 @@
 // @param namespace string Namespace to specify location of app; default is 'default'
 // @param name string Name of app to identify all K8s objects in this prototype
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local nodeJS = import 'incubator/node/nodejs.libsonnet';
 
 local namespace = import 'param://namespace';

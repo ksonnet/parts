@@ -7,7 +7,7 @@
 // @param name string Metadata name for each of the deployment components
 // @param mariaRootPassword string Password for root user
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local maria = import 'incubator/mariadb/maria.libsonnet';
 
 local namespace = "import 'param://namespace'";

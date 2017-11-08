@@ -8,7 +8,7 @@
 // @param rootPassword string RootPassword for db admin password
 // @param password string Password for db user password
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local mongo = import 'incubator/mongodb/mongodb.libsonnet';
 
 local namespace = "import 'param://namespace/'";
