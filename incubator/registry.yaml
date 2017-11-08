@@ -6,6 +6,10 @@
       "version": "test-reg",
       "path": "apache"
     },
+    "efk": {
+      "version": "test-reg",
+      "path": "efk"
+    },
     "mariadb": {
       "version": "test-reg",
       "path": "mariadb"
@@ -37,7 +41,7 @@
     "redis": {
       "version": "test-reg",
       "path": "redis"
-    },    
+    },
     "tomcat": {
       "version": "test-reg",
       "path": "tomcat"
