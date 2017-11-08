@@ -1,7 +1,8 @@
 {
-  "name": "apache",
-  "version": "0.0.1",
-  "description": "Apache Ksonnet mixin library contains a simple prototype with pre-configured components to help you deploy a Apache HTTP Server app to a Kubernetes cluster with ease.",
+  "name": "memcached",
+  "apiVersion": "0.0.1",
+  "kind": "ksonnet.io/parts",
+  "description": "Memcached is an in-memory key-value store for small chunks of arbitrary data (strings, objects) from results of database calls, API calls, or page rendering.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
     {
@@ -21,18 +22,19 @@
     "url": "https://github.com/ksonnet/mixins/issues"
   },
   "keywords": [
-    "apache",
-    "server",
-    "http"
+    "memcached",
+    "database",
+    "cache"
   ],
   "quickStart": {
-    "prototype": "io.ksonnet.pkg.apache-simple",
-    "componentName": "apache",
+    "prototype": "io.ksonnet.pkg.memcached-simple",
+    "componentName": "memcached",
     "flags": {
-      "name": "apache",
+      "name": "memcached",
       "namespace": "default"
     },
-    "comment": "Run a simple NGINX server"
+    "comment": "Run a simple memcached instance"
   },
   "license": "Apache 2.0"
 }
+

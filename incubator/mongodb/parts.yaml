@@ -1,6 +1,7 @@
 {
   "name": "mongodb",
-  "version": "0.0.1",
+  "apiVersion": "0.0.1",
+  "kind": "ksonnet.io/parts",
   "description": "MongoDB is a cross-platform document-oriented database. Classified as a NoSQL database, MongoDB eschews the traditional table-based relational database structure in favor of JSON-like documents with dynamic schemas, making the integration of data in certain types of applications easier and faster.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
@@ -39,3 +40,4 @@
   },
   "license": "Apache 2.0"
 }
+

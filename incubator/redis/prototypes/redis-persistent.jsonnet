@@ -7,7 +7,7 @@
 // @param name string Name to give to each of the components
 // @param redisPassword string User password to supply to redis
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local redis = import 'incubator/redis/redis.libsonnet';
 
 local namespace = import 'param://namespace';

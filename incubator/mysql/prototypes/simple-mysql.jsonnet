@@ -8,7 +8,7 @@
 // @param mysqlRootPassword string Password for root user
 // @param mysqlPassword string Password for new user
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local mysql = import '../mysql.libsonnet';
 
 local namespace = import 'param://namespace';

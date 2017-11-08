@@ -1,4 +1,4 @@
-local k = import "ksonnet.beta.2/k.libsonnet";
+local k = import "k.libsonnet";
 
 // Destructure the imports.
 local container = k.extensions.v1beta1.deployment.mixin.spec.template.spec.containersType;

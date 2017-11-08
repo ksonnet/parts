@@ -1,4 +1,4 @@
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local redis = import '../redis.libsonnet';
 
 k.core.v1.list.new([

@@ -7,12 +7,12 @@
 // @param name string Name to give to each of the components.
 // @param redisPassword string User password to supply to redis
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local redis = import 'incubator/redis/redis.libsonnet';
 
 local namespace = import 'param://namespace';
 local name = import 'param://name';
-local redisPassword = import 'param://tomcatPassword';
+local redisPassword = import 'param://redisPassword';
 
 k.core.v1.list.new([
   redis.parts.deployment.nonPersistent(namespace, name, name),

@@ -1,7 +1,8 @@
 {
-  "name": "mysql",
-  "version": "0.0.1",
-  "description": "MySQL is one of the most popular database servers in the world. Notable users include Wikipedia, Facebook and Google.",
+  "name": "nodejs",
+  "apiVersion": "0.0.1",
+  "kind": "ksonnet.io/parts",
+  "description": "Node is an event-driven I/O server-side JavaScript environment based on V8",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
     {
@@ -21,18 +22,20 @@
     "url": "https://github.com/ksonnet/mixins/issues"
   },
   "keywords": [
-    "mysql",
-    "database",
-    "relational"
+    "nodejs",
+    "node",
+    "server",
+    "javascript"
   ],
   "quickStart": {
-    "prototype": "io.ksonnet.pkg.simple-mysql",
-    "componentName": "mysql",
+    "prototype": "io.ksonnet.pkg.nodejs-simple",
+    "componentName": "nodejs",
     "flags": {
-      "name": "mysql",
+      "name": "nodejs",
       "namespace": "default"
     },
-    "comment": "Run a simple NGINX server"
+    "comment": "Run a simple node.js server"
   },
   "license": "Apache 2.0"
 }
+

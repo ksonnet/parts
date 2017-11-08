@@ -7,7 +7,7 @@
 // @param name string Name to give to each of the components
 
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local nginx = import 'incubator/nginx/nginx.libsonnet';
 
 local namespace = import 'param://namespace';

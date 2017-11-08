@@ -1,7 +1,8 @@
 {
-  "name": "nodejs",
-  "version": "0.0.1",
-  "description": "Node is an event-driven I/O server-side JavaScript environment based on V8",
+  "name": "apache",
+  "apiVersion": "0.0.1",
+  "kind": "ksonnet.io/parts",
+  "description": "Apache Ksonnet mixin library contains a simple prototype with pre-configured components to help you deploy a Apache HTTP Server app to a Kubernetes cluster with ease.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
     {
@@ -21,19 +22,19 @@
     "url": "https://github.com/ksonnet/mixins/issues"
   },
   "keywords": [
-    "nodejs",
-    "node",
+    "apache",
     "server",
-    "javascript"
+    "http"
   ],
   "quickStart": {
-    "prototype": "io.ksonnet.pkg.nodejs-simple",
-    "componentName": "nodejs",
+    "prototype": "io.ksonnet.pkg.apache-simple",
+    "componentName": "apache",
     "flags": {
-      "name": "nodejs",
+      "name": "apache",
       "namespace": "default"
     },
-    "comment": "Run a simple node.js server"
+    "comment": "Run a simple NGINX server"
   },
   "license": "Apache 2.0"
 }
+
