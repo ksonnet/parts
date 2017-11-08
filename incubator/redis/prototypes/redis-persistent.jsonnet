@@ -14,9 +14,17 @@ local namespace = import 'param://namespace';
 local name = import 'param://name';
 local redisPassword = import 'param://redisPassword';
 
-k.core.v1.list.new([
-  redis.parts.deployment.persistent(namespace, name, name),
+local secretName =
+  if redisPassword != null then name else null;
+
+local optionalSecret =
+  if redisPassword != null
+  then redis.parts.secret(namespace, name, redisPassword)
+  else null;
+
+std.prune((k.core.v1.list.new([
+  redis.parts.deployment.persistent(namespace, name, secretName),
   redis.parts.pvc(namespace, name),
-  redis.parts.secret(namespace, name, redisPassword),
   redis.parts.svc.metricDisabled(namespace, name),
-])
+  optionalSecret,
+]))
