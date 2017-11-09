@@ -7,12 +7,11 @@ local volume = deployment.mixin.spec.template.spec.volumesType;
 {
   parts:: {
     kibana::{
-      deployment::{
+      deployment(namespace)::{
           "apiVersion":"apps/v1beta1",
           "kind":"Deployment",
           "metadata":{
             "name":"kibana-logging",
-            "namespace":"kube-system",
             "labels":{
                 "k8s-app":"kibana-logging",
                 "kubernetes.io/cluster-service":"true",
@@ -52,7 +51,7 @@ local volume = deployment.mixin.spec.template.spec.volumesType;
                             },
                             {
                               "name":"SERVER_BASEPATH",
-                              "value":"/api/v1/proxy/namespaces/kube-system/services/kibana-logging"
+                              "value":"/api/v1/proxy/namespaces/" + namespace + "/services/kibana-logging"
                             },
                             {
                               "name":"XPACK_MONITORING_ENABLED",
@@ -81,7 +80,6 @@ local volume = deployment.mixin.spec.template.spec.volumesType;
           "kind":"Service",
           "metadata":{
             "name":"kibana-logging",
-            "namespace":"kube-system",
             "labels":{
                 "k8s-app":"kibana-logging",
                 "kubernetes.io/cluster-service":"true",
@@ -110,7 +108,6 @@ local volume = deployment.mixin.spec.template.spec.volumesType;
           "kind":"ServiceAccount",
           "metadata":{
             "name":"elasticsearch-logging",
-            "namespace":"kube-system",
             "labels":{
                 "k8s-app":"elasticsearch-logging",
                 "kubernetes.io/cluster-service":"true",
@@ -145,12 +142,12 @@ local volume = deployment.mixin.spec.template.spec.volumesType;
             }
           ]
       },
-      clusterRoleBinding::{
+      clusterRoleBinding(namespace)::{
           "kind":"ClusterRoleBinding",
           "apiVersion":"rbac.authorization.k8s.io/v1beta1",
           "metadata":{
-            "namespace":"kube-system",
             "name":"elasticsearch-logging",
+            "namespace": namespace,
             "labels":{
                 "k8s-app":"elasticsearch-logging",
                 "kubernetes.io/cluster-service":"true",
@@ -161,7 +158,6 @@ local volume = deployment.mixin.spec.template.spec.volumesType;
             {
                 "kind":"ServiceAccount",
                 "name":"elasticsearch-logging",
-                "namespace":"kube-system",
                 "apiGroup":""
             }
           ],
@@ -176,7 +172,6 @@ local volume = deployment.mixin.spec.template.spec.volumesType;
           "kind":"StatefulSet",
           "metadata":{
             "name":"elasticsearch-logging",
-            "namespace":"kube-system",
             "labels":{
                 "k8s-app":"elasticsearch-logging",
                 "version":"v5.6.2",
@@ -276,7 +271,6 @@ local volume = deployment.mixin.spec.template.spec.volumesType;
           "kind":"Service",
           "metadata":{
             "name":"elasticsearch-logging",
-            "namespace":"kube-system",
             "labels":{
                 "k8s-app":"elasticsearch-logging",
                 "kubernetes.io/cluster-service":"true",
