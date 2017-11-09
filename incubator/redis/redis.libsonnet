@@ -15,11 +15,11 @@ local networkSpec = networkPolicy.mixin.spec;
         },
       },
 
-      allowExternal(namespace, name, allowInbound, metricEnabled, podSelector=null, labels={app:name},)::
-        base(namespace, name, metricEnabled, podSelector, labels) +
+      allowExternal(name, allowInbound, metricEnabled, podSelector=null, labels={app:name},)::
+        base(name, metricEnabled, podSelector, labels) +
         networkSpec.ingress(defaults.inboundPort),
 
-      denyExternal(namespace, name, allowInbound, metricEnabled, podSelector={matchLabels:{[name + "-client"]: "true"}}, labels={app:name}, )::
+      denyExternal(name, allowInbound, metricEnabled, podSelector={matchLabels:{[name + "-client"]: "true"}}, labels={app:name}, )::
         local ingressRule = defaults.inboundPort + {
           from: [
             {
@@ -27,15 +27,14 @@ local networkSpec = networkPolicy.mixin.spec;
             },
           ],
         };
-        base(namespace, name, metricEnabled, podSelector, labels)+
+        base(name, metricEnabled, podSelector, labels)+
         networkSpec.ingress(ingressRule),
 
-      local base(namespace, name, metricEnabled, podSelector, labels) = {
+      local base(name, metricEnabled, podSelector, labels) = {
         kind: "NetworkPolicy",
         apiVersion: "networking.k8s.io/v1",
         metadata: {
           name: name,
-          namespace: namespace,
           labels: labels,
         },
         spec: {
@@ -52,7 +51,7 @@ local networkSpec = networkPolicy.mixin.spec;
       },
     },
 
-    secret(namespace, name, redisPassword, labels={app:name})::
+    secret(name, redisPassword, labels={app:name})::
       local defaults = {
         usePassword: true,
       };
@@ -62,7 +61,6 @@ local networkSpec = networkPolicy.mixin.spec;
         kind: "Secret",
         metadata: {
           name: name,
-          namespace: namespace,
           labels: labels,
         },
         type: "Opaque",
@@ -72,23 +70,22 @@ local networkSpec = networkPolicy.mixin.spec;
       },
 
     svc::{
-      metricDisabled(namespace,name, labels={app:name}, selector={app:name})::
-      svcBase(namespace,name, labels, selector),
+      metricDisabled(name, labels={app:name}, selector={app:name})::
+      svcBase(name, labels, selector),
 
-      metricEnabled(namespace, name, labels={app:name}, selector={app:name})::
+      metricEnabled(name, labels={app:name}, selector={app:name})::
         local annotations = {
           "prometheus.io/scrape": "true",
           "prometheus.io/port": "9121"
         };
-        svcBase(namespace, name, labels, selector) +
+        svcBase(name, labels, selector) +
           service.mixin.metadata.annotations(annotations),
 
-      local svcBase(namespace, name, labels, selector)= {
+      local svcBase(name, labels, selector)= {
         apiVersion: "v1",
         kind: "Service",
         metadata: {
           name: name,
-          namespace: namespace,
           labels: labels,
         },
         spec: {
@@ -104,7 +101,7 @@ local networkSpec = networkPolicy.mixin.spec;
       },
     },
 
-    pvc(namespace, name, storageClass="-", labels={app:name})::
+    pvc(name, storageClass="-", labels={app:name})::
       local defaults = {
         accessMode: "ReadWriteOnce",
         size: '8Gi'
@@ -115,7 +112,6 @@ local networkSpec = networkPolicy.mixin.spec;
         apiVersion: "v1",
         metadata: {
           name: name,
-          namespace: namespace,
           labels: labels
         },
         spec: {
@@ -152,33 +148,33 @@ local networkSpec = networkPolicy.mixin.spec;
         },
       },
 
-      nonPersistent(namespace, name, secretName, metricEnabled=false, labels={app:name},):
+      nonPersistent(name, secretName, metricEnabled=false, labels={app:name},):
         local volume = {
           name: "redis-data",
           emptyDir: {}
         };
-        base(namespace, name, secretName, metricEnabled, labels) +
+        base(name, secretName, metricEnabled, labels) +
         deployment.mixin.spec.template.spec.volumes(volume) +
         deployment.mapContainersWithName(
           [name],
           function(c) c + container.volumeMounts(defaults.dataMount)
         ),
 
-      persistent(namespace, name, secretName, metricEnabled=false, claimName=name, labels={app:name})::
+      persistent(name, secretName, metricEnabled=false, claimName=name, labels={app:name})::
         local volume = {
           name: "redis-data",
           persistentVolumeClaim: {
             claimName: claimName
           }
         };
-        base(namespace, name, secretName, metricEnabled, labels) +
+        base(name, secretName, metricEnabled, labels) +
         deployment.mixin.spec.template.spec.volumes(volume) +
         deployment.mapContainersWithName(
           [name],
           function(c) c + container.volumeMounts(defaults.dataMount)
         ),
 
-      local base(namespace, name, secretName, metricsEnabled, labels) =
+      local base(name, secretName, metricsEnabled, labels) =
         local metricsContainer =
           if !metricsEnabled then []
           else [{
@@ -214,7 +210,6 @@ local networkSpec = networkPolicy.mixin.spec;
         kind: "Deployment",
         metadata: {
           name: name,
-          namespace: namespace,
           labels: labels,
         },
         spec: {

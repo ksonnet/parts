@@ -3,27 +3,25 @@
 // @description Stateless redis, backed with NO persistent volume claim. Redis is deployed
 //   using a Kubernetes deployment, exposed to the network with a service, with
 //   a password stored in a secret.
-// @param namespace string Namespace in which to put the application
 // @param name string Name to give to each of the components.
-// @param redisPassword string User password to supply to redis
+// @optionalParam redisPassword string null User password to supply to redis
 
 local k = import 'k.libsonnet';
 local redis = import 'incubator/redis/redis.libsonnet';
 
-local namespace = import 'param://namespace';
 local name = import 'param://name';
 local redisPassword = import 'param://redisPassword';
 
 local secretName =
-  if redisPassword != null then name else null;
+  if redisPassword != "null" then name else null;
 
 local optionalSecret =
-  if redisPassword != null
-  then redis.parts.secret(namespace, name, redisPassword)
+  if redisPassword != "null"
+  then redis.parts.secret(name, redisPassword)
   else null;
 
 std.prune(k.core.v1.list.new([
-  redis.parts.deployment.nonPersistent(namespace, name, secretName),
-  redis.parts.svc.metricDisabled(namespace, name),
+  redis.parts.deployment.nonPersistent(name, secretName),
+  redis.parts.svc.metricDisabled(name),
   optionalSecret,
 ]))
