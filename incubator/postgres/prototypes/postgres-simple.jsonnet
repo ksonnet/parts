@@ -7,7 +7,7 @@
 // @param namespace string Namespace to specify destination in cluster; default is 'default'
 // @param password string Password for the root/admin user.
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local psg = import 'incubator/postgres/postgres.libsonnet';
 
 local appName = import 'param://name';

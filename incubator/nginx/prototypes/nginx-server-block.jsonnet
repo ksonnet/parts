@@ -8,7 +8,7 @@
 
 // TODO: How should the ServerBlockConf be exposed to the user? Not quite sure what the default does except for setting web server to port 80.
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local nginx = import 'incubator/nginx/nginx.libsonnet';
 
 local namespace = import 'param://namespace';

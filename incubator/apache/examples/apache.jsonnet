@@ -1,4 +1,4 @@
-local k = import "ksonnet.beta.2/k.libsonnet";
+local k = import "k.libsonnet";
 local apache = import "../apache.libsonnet";
 
 

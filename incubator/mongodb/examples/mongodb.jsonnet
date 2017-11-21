@@ -1,4 +1,4 @@
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local mongo = import '../mongodb.libsonnet';
 
 local namespace = "dev-alex";

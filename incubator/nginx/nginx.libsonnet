@@ -1,4 +1,4 @@
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local deployment = k.extensions.v1beta1.deployment;
 local container = deployment.mixin.spec.template.spec.containersType;
 
@@ -23,10 +23,10 @@ local container = deployment.mixin.spec.template.spec.containersType;
           mountPath:: "/bitnami/nginx/conf/vhosts",
         };
         base(namespace, name, labels) +
-        deployment.mixin.spec.template.spec.volumes(volume) +
+        deployment.mixin.spec.template.spec.withVolumes(volume) +
         deployment.mapContainersWithName(
           [name],
-          function(c) c + container.volumeMounts(dataMount)
+          function(c) c + container.withVolumeMounts(dataMount)
         ),
 
       local base(namespace, name, labels) = {

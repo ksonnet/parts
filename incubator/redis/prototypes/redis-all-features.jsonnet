@@ -1,8 +1,7 @@
 // @apiVersion 0.1
-// @name io.ksonnet.pkg.redis-persistent
-// @description Redis backed by a persistent volume claim. Redis is deployed using a Kubernetes
-//   deployment, exposed to the network with a service, with a password stored
-//   in a secret.
+// @name io.ksonnet.pkg.redis-all-features
+// @description Redis with all the features supported by redis.libsonnet
+//   (e.g. secret, metrics, ingress, PVC)
 // @param name string Name to give to each of the components
 // @optionalParam redisPassword string null User password to supply to redis
 
@@ -22,7 +21,8 @@ local optionalSecret =
 
 std.prune(k.core.v1.list.new([
   redis.parts.deployment.persistent(name, secretName),
+  redis.parts.networkPolicy.allowExternal(name, true, true),
   redis.parts.pvc(name),
-  redis.parts.svc.metricDisabled(name),
+  redis.parts.svc.metricEnabled(name),
   optionalSecret,
 ]))

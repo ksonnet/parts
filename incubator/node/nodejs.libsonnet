@@ -1,4 +1,4 @@
-local k = import "ksonnet.beta.2/k.libsonnet";
+local k = import "k.libsonnet";
 local deployment = k.extensions.v1beta1.deployment;
 
 {
@@ -89,7 +89,7 @@ local deployment = k.extensions.v1beta1.deployment;
           },
         };
         base(namespace, name, labels) +
-        deployment.mixin.spec.template.spec.volumes(volume),
+        deployment.mixin.spec.template.spec.withVolumes(volume),
 
       nonPersistent(namespace, name, labels=defaults.labels(name))::
         local volume = {
@@ -97,7 +97,7 @@ local deployment = k.extensions.v1beta1.deployment;
           emptyDir: {},
         };
         base(namespace, name, labels) +
-        deployment.mixin.spec.template.spec.volumes(volume),
+        deployment.mixin.spec.template.spec.withVolumes(volume),
 
       local base(namespace, name, labels) = {
         apiVersion: "extensions/v1beta1",

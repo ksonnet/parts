@@ -1,4 +1,4 @@
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local deployment = k.extensions.v1beta1.deployment;
 
 {
@@ -131,7 +131,7 @@ local deployment = k.extensions.v1beta1.deployment;
           }
         };
         base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, existingClaim, labels, configMapName) +
-          deployment.mixin.spec.template.spec.volumes(volume),
+          deployment.mixin.spec.template.spec.withVolumes(volume),
 
       nonPersistent(namespace, name, passwordSecretName, mariaConfig=defaults.mariaConfig, metricsEnabled=true, existingClaim=name, labels={app:name}, configMapName=name)::
          base(namespace, name, passwordSecretName, mariaConfig, metricsEnabled, existingClaim, labels, configMapName),

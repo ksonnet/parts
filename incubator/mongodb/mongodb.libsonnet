@@ -1,4 +1,4 @@
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local deployment = k.extensions.v1beta1.deployment;
 
 {
@@ -28,15 +28,15 @@ local deployment = k.extensions.v1beta1.deployment;
       },
 
       persistent(namespace, name, mongoConfig=defaults.mongoConfig,  labels={app: name}, pvcName={claimName: name})::
-        base(namespace, name, mongoConfig, labels) +
-        k.apps.v1beta1.deployment.mixin.spec.template.spec.volumes({
+        base(namespace, name, mongoConfig, labels)
+        .withVolumes({
           name: "data",
           persistentVolumeClaim: pvcName,
         }),
 
       nonPersistent(namespace, name, labels={app: name}, mongoConfig=defaults.mongoConfig)::
-        base(namespace, name, mongoConfig, labels) +
-        k.apps.v1beta1.deployment.mixin.spec.template.spec.volumes({
+        base(namespace, name, mongoConfig, labels)
+        .withVolumes({
           name: "data",
           emptyDir: {},
         }),

@@ -1,4 +1,4 @@
-local k = import "ksonnet.beta.2/k.libsonnet";
+local k = import "k.libsonnet";
 
 // Destructuring imports for base.
 local ds = k.extensions.v1beta1.daemonSet;

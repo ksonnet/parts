@@ -1,4 +1,4 @@
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local service = k.core.v1.service.mixin;
 
 {
@@ -165,7 +165,7 @@ local service = k.core.v1.service.mixin;
           }
         };
         base(namespace, name, pgConfig, metricsEnabled, existingClaim, labels) +
-        k.extensions.v1beta1.deployment.mixin.spec.template.spec.volumes(volume),
+        k.extensions.v1beta1.deployment.mixin.spec.template.spec.withVolumes(volume),
 
       nonPersistent(namespace, name, pgConfig=defaults.postgresConfig, metricsEnabled=false, existingClaim=name, labels={app:name})::
         local volume = {
@@ -173,7 +173,7 @@ local service = k.core.v1.service.mixin;
           emptyDir: {}
         };
         base(namespace, name, pgConfig, metricsEnabled, existingClaim, labels) +
-        k.extensions.v1beta1.deployment.mixin.spec.template.spec.volumes(volume),
+        k.extensions.v1beta1.deployment.mixin.spec.template.spec.withVolumes(volume),
 
       local base(namespace, name, pgConfig, metricsEnabled, existingClaim, labels) =
         local metricsContainer = [

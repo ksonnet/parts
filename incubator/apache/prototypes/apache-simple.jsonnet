@@ -5,7 +5,7 @@
 // @param namespace string Namespace to divvy up your cluster; default is 'default'
 // @param name string Name to identify all Kubernetes objects in this prototype
 
-local k = import 'ksonnet.beta.2/k.libsonnet';
+local k = import 'k.libsonnet';
 local apache = import 'incubator/apache/apache.libsonnet';
 
 local namespace = import 'param://namespace';
