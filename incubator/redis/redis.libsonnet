@@ -17,7 +17,7 @@ local networkSpec = networkPolicy.mixin.spec;
 
       allowExternal(name, allowInbound, metricEnabled, podSelector=null, labels={app:name},)::
         base(name, metricEnabled, podSelector, labels) +
-        networkSpec.ingress(defaults.inboundPort),
+        networkSpec.withIngress(defaults.inboundPort),
 
       denyExternal(name, allowInbound, metricEnabled, podSelector={matchLabels:{[name + "-client"]: "true"}}, labels={app:name}, )::
         local ingressRule = defaults.inboundPort + {
@@ -28,7 +28,7 @@ local networkSpec = networkPolicy.mixin.spec;
           ],
         };
         base(name, metricEnabled, podSelector, labels)+
-        networkSpec.ingress(ingressRule),
+        networkSpec.withIngress(ingressRule),
 
       local base(name, metricEnabled, podSelector, labels) = {
         kind: "NetworkPolicy",
@@ -79,7 +79,7 @@ local networkSpec = networkPolicy.mixin.spec;
           "prometheus.io/port": "9121"
         };
         svcBase(name, labels, selector) +
-          service.mixin.metadata.annotations(annotations),
+          service.mixin.metadata.withAnnotations(annotations),
 
       local svcBase(name, labels, selector)= {
         apiVersion: "v1",
@@ -154,10 +154,10 @@ local networkSpec = networkPolicy.mixin.spec;
           emptyDir: {}
         };
         base(name, secretName, metricEnabled, labels) +
-        deployment.mixin.spec.template.spec.volumes(volume) +
+        deployment.mixin.spec.template.spec.withVolumes(volume) +
         deployment.mapContainersWithName(
           [name],
-          function(c) c + container.volumeMounts(defaults.dataMount)
+          function(c) c + container.withVolumeMounts(defaults.dataMount)
         ),
 
       persistent(name, secretName, metricEnabled=false, claimName=name, labels={app:name})::
@@ -168,10 +168,10 @@ local networkSpec = networkPolicy.mixin.spec;
           }
         };
         base(name, secretName, metricEnabled, labels) +
-        deployment.mixin.spec.template.spec.volumes(volume) +
+        deployment.mixin.spec.template.spec.withVolumes(volume) +
         deployment.mapContainersWithName(
           [name],
-          function(c) c + container.volumeMounts(defaults.dataMount)
+          function(c) c + container.withVolumeMounts(defaults.dataMount)
         ),
 
       local base(name, secretName, metricsEnabled, labels) =

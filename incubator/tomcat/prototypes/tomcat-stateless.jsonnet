@@ -10,10 +10,10 @@
 local k = import 'k.libsonnet';
 local tc = import 'incubator/tomcat/tomcat.libsonnet';
 
-local namespace = "import 'param://namespace'";
-local name = "import 'param://name'";
-local tomcatUser = "import 'param://tomcatUser'";
-local tomcatPassword = "import 'param://tomcatPassword'";
+local namespace = import 'param://namespace';
+local name = import 'param://name';
+local tomcatUser = import 'param://tomcatUser';
+local tomcatPassword = import 'param://tomcatPassword';
 
 k.core.v1.list.new([
   tc.parts.deployment.nonPersistent(namespace, name, tomcatUser, name),

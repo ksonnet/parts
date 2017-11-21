@@ -11,11 +11,11 @@
 local k = import 'k.libsonnet';
 local tc = import 'incubator/tomcat/tomcat.libsonnet';
 
-local namespace = "import 'param://namespace'";
-local name = "import 'param://name'";
-local tomcatUser = "import 'param://tomcatUser'";
-local tomcatPassword = "import 'param://tomcatPassword'";
-local passwordSecretName = "import 'param://passwordSecretName/name' ";
+local namespace = import 'param://namespace';
+local name = import 'param://name';
+local tomcatUser = import 'param://tomcatUser';
+local tomcatPassword = import 'param://tomcatPassword';
+local passwordSecretName = import 'param://passwordSecretName/name';
 
 
 k.core.v1.list.new([

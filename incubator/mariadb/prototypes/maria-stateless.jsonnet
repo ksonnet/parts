@@ -10,9 +10,9 @@
 local k = import 'k.libsonnet';
 local maria = import 'incubator/mariadb/maria.libsonnet';
 
-local namespace = "import 'param://namespace'";
-local name = "import 'param://name'";
-local mariaRootPassword = "import 'param://mariaRootPassword'";
+local namespace = import 'param://namespace';
+local name = import 'param://name';
+local mariaRootPassword = import 'param://mariaRootPassword';
 
 k.core.v1.list.new([
   maria.parts.deployment.nonPersistent(namespace, name, name),

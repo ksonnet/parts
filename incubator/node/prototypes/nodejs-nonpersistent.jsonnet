@@ -8,8 +8,8 @@
 local k = import 'k.libsonnet';
 local nodeJS = import 'incubator/node/nodejs.libsonnet';
 
-local namespace = import 'param://namespace';
-local appName = import 'param://name';
+local namespace = "import 'param://namespace'";
+local appName = "import 'param://name'";
 
 k.core.v1.list.new([
   nodeJS.parts.deployment.nonPersistent(namespace, appName),

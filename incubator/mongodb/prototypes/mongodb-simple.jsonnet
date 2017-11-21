@@ -11,10 +11,10 @@
 local k = import 'k.libsonnet';
 local mongo = import 'incubator/mongodb/mongodb.libsonnet';
 
-local namespace = "import 'param://namespace/'";
-local appName = "import 'param://name'";
-local rootPassword = "import 'param://rootPassword'";
-local password = "import 'param://password'";
+local namespace = import 'param://namespace/';
+local appName = import 'param://name';
+local rootPassword = import 'param://rootPassword';
+local password = import 'param://password';
 
 k.core.v1.list.new([
   mongo.parts.deployment.persistent(namespace, appName),
