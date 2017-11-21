@@ -20,7 +20,7 @@ local optionalSecret =
   then redis.parts.secret(name, redisPassword)
   else null;
 
-std.prune((k.core.v1.list.new([
+std.prune(k.core.v1.list.new([
   redis.parts.deployment.persistent(name, secretName),
   redis.parts.pvc(name),
   redis.parts.svc.metricDisabled(name),

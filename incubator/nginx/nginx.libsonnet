@@ -23,10 +23,10 @@ local container = deployment.mixin.spec.template.spec.containersType;
           mountPath:: "/bitnami/nginx/conf/vhosts",
         };
         base(namespace, name, labels) +
-        deployment.mixin.spec.template.spec.volumes(volume) +
+        deployment.mixin.spec.template.spec.withVolumes(volume) +
         deployment.mapContainersWithName(
           [name],
-          function(c) c + container.volumeMounts(dataMount)
+          function(c) c + container.withVolumeMounts(dataMount)
         ),
 
       local base(namespace, name, labels) = {

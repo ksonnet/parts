@@ -299,12 +299,13 @@ local volume = deployment.mixin.spec.template.spec.volumesType;
 
         deployment.mapContainersWithName(
           [containerName],
-          function(c) c + container.volumeMounts(container.volumeMountsType.new(volumeName, "/var/log"))
-        ) + deployment.mixin.spec.template.spec.containers(
-          container.new("fluentd-sidecar", "alpinejay/fluentd-sidecar-es:v1.1") +
-          container.env(container.envType.new("FILES_TO_COLLECT", "/mnt/log/apache2/access.log /mnt/log/apache2/error.log")) +
-          container.volumeMounts(container.volumeMountsType.new(volumeName, "/mnt/log", true))
-        ) + deployment.mixin.spec.template.spec.volumes(
+          function(c) c + container.withVolumeMounts(container.volumeMountsType.new(volumeName, "/var/log"))
+        ) + deployment.mixin.spec.template.spec.withContainers(
+          container
+            .new("fluentd-sidecar", "alpinejay/fluentd-sidecar-es:v1.1")
+            .withEnv(container.envType.new("FILES_TO_COLLECT", "/mnt/log/apache2/access.log /mnt/log/apache2/error.log"))
+            .withVolumeMounts(container.volumeMountsType.new(volumeName, "/mnt/log", true))
+        ) + deployment.mixin.spec.template.spec.withVolumes(
            volume.fromEmptyDir(volumeName)
         ),
     },

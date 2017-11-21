@@ -100,7 +100,7 @@ local k = import 'k.libsonnet';
 
       persistent(namespace, name, tomcatUser, passwordSecretName, claimName)::
         base(namespace, name, tomcatUser, passwordSecretName) +
-        k.apps.v1beta1.deployment.mixin.spec.template.spec.volumes(
+        k.apps.v1beta1.deployment.mixin.spec.template.spec.withVolumes(
           {
             name: "tomcat-data",
             persistentVolumeClaim: {
@@ -110,7 +110,7 @@ local k = import 'k.libsonnet';
 
       nonPersistent(namespace, name, tomcatUser, passwordSecretName)::
         base(namespace, name, tomcatUser, passwordSecretName) +
-        k.apps.v1beta1.deployment.mixin.spec.template.spec.volumes(
+        k.apps.v1beta1.deployment.mixin.spec.template.spec.withVolumes(
           {
             name: "tomcat-data",
             emptyDir: {}
