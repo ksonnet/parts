@@ -140,7 +140,7 @@ local rule = clRole.rulesType;
               varlogVolName,
               podLogsVolName,
               $.util.containerNameInSet(config.agent.containerName)) +
-            ds.mixin.spec.template.spec.serviceAccountName(config.rbac.accountName)
+            deployment.mixin.spec.template.spec.serviceAccountName(config.rbac.accountName)
         },
     },
   },
