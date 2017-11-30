@@ -3,6 +3,7 @@
 // @description Deploys MySQL backed by a persistent volume. The MySQL container is deployed
 //   using a deployment and exposed to the network with a service. The
 //   passwords are stored in a secret.
+// @shortDescription A simple MySQL deployment, backed by persistent storage.
 // @param namespace string Namespace in which to put the application
 // @param name string Name to give to each of the components
 // @param mysqlRootPassword string Password for root user
@@ -23,4 +24,3 @@ k.core.v1.list.new([
   mysql.parts.secret(namespace, name, mysqlPassword, mysqlRootPassword),
   mysql.parts.svc(namespace, name)
 ])
-

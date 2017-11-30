@@ -2,6 +2,7 @@
 // @name io.ksonnet.pkg.redis-all-features
 // @description Redis with all the features supported by redis.libsonnet
 //   (e.g. secret, metrics, ingress, PVC)
+// @shortDescription A Redis deployment with metrics, ingress, and persistent storage.
 // @param name string Name to give to each of the components
 // @optionalParam redisPassword string null User password to supply to redis
 

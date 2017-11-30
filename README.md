@@ -1,30 +1,18 @@
-# ksonnet Mixins
+# ksonnet Libraries
 
 ## Overview
 
-This repository contains a collection of [ksonnet][1] libraries,
-designed to make it easy to:
+This repository contains [ksonnet][1] libraries, which are designed to make it
+easy to embed common Kubernetes configurations into your own applications.
 
-* *Embed other projects* into your Kubernetes applications as "sidecars"
-  (_e.g._, adding the [Honeycomb observability agent][7] to an existing
-  `Deployment` you've authored).
-* *Customize and extend Kubernetes applications* to fit your needs
-  (_i.e._, with ksonnet, you can manipulate Kubernetes
-  API objects, so you are not constrained by a single YAML values
-  file.)
+It is structured as follows:
 
-For more information, see the [ksonnet Github repo][2].
+* `incubator/`, a ksonnet [registry][2] that can be used with the CLI tool, `ks`. For more info, see the [incubator README][7].
 
-## Repository structure
+* `deprecated/`, which contains ksonnet libraries that are no longer supported
 
-The repository is structured into two main sets of libraries:
-
-* `incubator/`, which contains libraries that are relatively new, and still need to be vetted by the community (similar to alpha/beta releases).
-* `stable/`, which contains libraries that are considered to be
-  production-ready.
-
-As the project matures, we expect most projects to transition to
-`stable/`.
+In the future, as the project matures, we expect most libraries in `incubator/`
+to transition to a new `stable/` directory.
 
 ## Contributing
 
@@ -47,10 +35,10 @@ contributing!
 
 See the [contact information for the ksonnet community][6].
 
-[1]: http://ksonnet.heptio.com/
-[2]: https://github.com/ksonnet/ksonnet-lib
-[3]: https://github.com/ksonnet/ksonnet-lib/blob/master/CODE-OF-CONDUCT.md
-[4]: https://github.com/ksonnet/ksonnet-lib/blob/master/CONTRIBUTING.md
+[1]: https://ksonnet.io
+[2]: https://ksonnet.io/docs/concepts#registry
+[3]: /CODE-OF-CONDUCT.md
+[4]: /CONTRIBUTING.md
 [5]: https://github.com/ksonnet/mixins/issues
-[6]: https://github.com/ksonnet/ksonnet-lib/blob/master/README.md#contact-us
-[7]: https://github.com/ksonnet/mixins/tree/honeycomb/incubator/honeycomb-agent
+[6]: https://github.com/ksonnet/ksonnet#contributing
+[7]: /incubator/README.md

@@ -1,7 +1,8 @@
 // @apiVersion 0.1
 // @name io.ksonnet.pkg.elasticsearch-kibana
-// @description Elasticsearch and kibana stack for logging. Elasticsearch
+// @description Elasticsearch and Kibana stack for logging. Elasticsearch
 //   indexes the logs, and kibana provides a queryable, interactive UI.
+// @shortDescription The Elasticsearch and Kibana setup for an EFK logging stack.
 // @optionalParam namespace string default Namespace in which to put the application
 
 local k = import 'k.libsonnet';

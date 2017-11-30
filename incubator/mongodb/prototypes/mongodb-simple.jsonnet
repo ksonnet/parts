@@ -3,6 +3,7 @@
 // @description Deploys a simple instance of mongodb, backed by a persistent volume claim. The
 //   mongodb container is deployed using a Kubernetes deployment, and exposed
 //   to the network using a service. Passwords are stored in a secret.
+// @shortDescription A simple MongoDB deployment, backed by persistent storage.
 // @param namespace string Namespace to specify destination in cluster; default is 'default'
 // @param name string Name of app to attach as identifier to all components
 // @param rootPassword string RootPassword for db admin password

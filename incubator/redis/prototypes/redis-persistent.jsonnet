@@ -4,6 +4,7 @@
 //   deployment, exposed to the network with a service, with a password stored
 //   in a secret.
 // @param name string Name to give to each of the components
+// @shortDescription A simple Redis deployment, backed by persistent storage.
 // @optionalParam redisPassword string null User password to supply to redis
 
 local k = import 'k.libsonnet';

@@ -3,6 +3,7 @@
 // @description Stateless redis, backed with NO persistent volume claim. Redis is deployed
 //   using a Kubernetes deployment, exposed to the network with a service, with
 //   a password stored in a secret.
+// @shortDescription A simple, stateless Redis deployment,
 // @param name string Name to give to each of the components.
 // @optionalParam redisPassword string null User password to supply to redis
 
