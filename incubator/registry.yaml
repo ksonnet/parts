@@ -2,35 +2,35 @@ apiVersion: '0.1'
 kind: ksonnet.io/registry
 libraries:
   apache:
-    version: test-reg
+    version: master
     path: apache
   efk:
-    version: test-reg
+    version: master
     path: efk
   mariadb:
-    version: test-reg
+    version: master
     path: mariadb
   memcached:
-    version: test-reg
+    version: master
     path: memcached
   mongodb:
-    version: test-reg
+    version: master
     path: mongodb
   mysql:
-    version: test-reg
+    version: master
     path: mysql
   node:
-    version: test-reg
+    version: master
     path: node
   nginx:
-    version: test-reg
+    version: master
     path: nginx
   postgres:
-    version: test-reg
+    version: master
     path: postgres
   redis:
-    version: test-reg
+    version: master
     path: redis
   tomcat:
-    version: test-reg
+    version: master
     path: tomcat

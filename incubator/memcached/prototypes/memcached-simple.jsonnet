@@ -3,6 +3,7 @@
 // @description Deploys Memcached on a your Kubernetes cluster through a stateful set with 3
 //   replicas, pod distribution budget (pdb), and service. Memcached
 //   can be accessed via port 11211 within the cluster.
+// @shortDescription Simple Memcached instance with 3 replicas.
 // @param namespace string Namespace in which to put the application
 // @param name string Name to give to each of the components
 

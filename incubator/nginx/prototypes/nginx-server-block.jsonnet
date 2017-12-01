@@ -3,6 +3,7 @@
 // @description Deploys a simple, stateless nginx server with server blocks (roughly equivalent
 //   to nginx virtual hosts). The nginx container is deployed using a
 //   Kubernetes deployment, and is exposed to a network with a service.
+// @shortDescription A simple, stateless nginx server with server blocks.
 // @param namespace string Namespace in which to put the application
 // @param name string Name to give to all components.
 

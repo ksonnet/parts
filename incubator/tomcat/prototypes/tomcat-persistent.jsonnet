@@ -3,6 +3,7 @@
 // @description Deploys a stateful Tomcat server, backed by a persistent volume. Server is
 //   deployed using a Kubernetes deployment, and exposed to the network using a
 //   service. The password is stored as a secret.
+// @shortDescription A simple Tomcat app server, backed with persistent storage.
 // @param namespace string Namespace in which to put the application
 // @param name string Name to give to each of the components
 // @param tomcatUser string Username for tomcat manager page, if not specified tomcat will not assign users
@@ -24,4 +25,3 @@ k.core.v1.list.new([
   tc.parts.secret(namespace, name, tomcatPassword),
   tc.parts.svc(namespace,name)
   ])
-

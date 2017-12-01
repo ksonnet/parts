@@ -3,6 +3,7 @@
 // @description Deploy stateless instance of MariaDB. This is NOT backed by a persistent volume.
 //   The MariaDB container is deployed using a deployment and exposed to the
 //   network as a service. The password is stored as a secret.
+// @shortDescription A simple, stateless MariaDB deployment.
 // @param namespace string Namespace in which to put the application
 // @param name string Metadata name for each of the deployment components
 // @param mariaRootPassword string Password for root user
@@ -19,4 +20,3 @@ k.core.v1.list.new([
   maria.parts.secret(namespace, name, mariaRootPassword),
   maria.parts.svc(namespace, name)
   ])
-

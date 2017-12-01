@@ -3,6 +3,7 @@
 // @description Deploy postgres backed by a persistent volume. Postgres container is managed by
 //   a deployment object and exposed to the network with a service. The
 //   passwords are stored in a secret.
+// @shortDescription A simple Postgres deployment, backed by persistent storage.
 // @param name string Name of app to attach as identifier to all components
 // @param namespace string Namespace to specify destination in cluster; default is 'default'
 // @param password string Password for the root/admin user.
