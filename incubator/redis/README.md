@@ -39,7 +39,7 @@ These prototypes, as well as how to use them, are enumerated below.
 
 ### io.ksonnet.pkg.redis-persistent
 
-Redis backed by a persistent volume claim. Redis is deployed using a Kubernetesdeployment, exposed to the network with a service, with a password stored
+Redis backed by a persistent volume claim. Redis is deployed using a Kubernetes deployment, exposed to the network with a service, with a password stored
 in a secret.
 
 #### Example
