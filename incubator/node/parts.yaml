@@ -2,7 +2,7 @@
   "name": "nodejs",
   "apiVersion": "0.0.1",
   "kind": "ksonnet.io/parts",
-  "description": "Node is an event-driven I/O server-side JavaScript environment based on V8",
+  "description": "NodeJS is a JavaScript runtime built on Chrome's V8 JavaScript engine, and is designed to be lightweight and efficient. To that end, it uses an event-driven, non-blcoking I/O model. NodeJS also has a large ecosystem of open-source packages, which can be managed with the npm tool.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
     {

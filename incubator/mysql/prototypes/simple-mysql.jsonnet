@@ -1,13 +1,15 @@
 // @apiVersion 0.1
 // @name io.ksonnet.pkg.simple-mysql
-// @description Deploys MySQL backed by a persistent volume. The MySQL container is deployed
-//   using a deployment and exposed to the network with a service. The
-//   passwords are stored in a secret.
+// @description deploys a MySQL instance. It runs as a Deployment backed by a
+//   PersistentVolumeClaim, and is exposed to the network with a Service. The
+//   passwords are stored in a Secret.
 // @shortDescription A simple MySQL deployment, backed by persistent storage.
-// @param namespace string Namespace in which to put the application
-// @param name string Name to give to each of the components
-// @param mysqlRootPassword string Password for root user
-// @param mysqlPassword string Password for new user
+// @param namespace string Namespace (metadata) that the MySQL resources are
+//  created under
+// @param name string Name (metadata) to identify all resources defined by this
+//  prototype
+// @param mySqlaRootPassword string Password for the root user
+// @param mysqlPassword string Password for new use
 
 local k = import 'k.libsonnet';
 local mysql = import '../mysql.libsonnet';

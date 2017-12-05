@@ -2,7 +2,7 @@
   "name": "apache",
   "apiVersion": "0.0.1",
   "kind": "ksonnet.io/parts",
-  "description": "Apache Ksonnet mixin library contains a simple prototype with pre-configured components to help you deploy a Apache HTTP Server app to a Kubernetes cluster with ease.",
+  "description": "Apache is a popular, open-source HTTP server",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
     {

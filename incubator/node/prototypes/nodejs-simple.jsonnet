@@ -1,10 +1,14 @@
 // @apiVersion 0.0.1
 // @name io.ksonnet.pkg.nodejs-simple
-// @description Deploy a node.js server with persistent volumes. The node container is
-//   deployed using a deployment, and exposed to the network using a service.
+// @description deploys a node.js app backed by a PersistentVolumeClaim. Its
+//   source code is available at
+//   https://github.com/jbianquetti-nami/simple-node-app. The app runs as a
+//   Deployment, and is exposed to the network using a Service.
 // @shortDescription A simple NodeJS app server with persistent storage.
-// @param namespace string Namespace to specify location of app; default is 'default'
-// @param name string Name of app to identify all K8s objects in this prototype
+// @param namespace string Namespace (metadata) that the app resources are
+//   created under
+// @param name string Name (metadata) to identify all resources defined by this
+//   prototype
 
 
 local k = import 'k.libsonnet';
