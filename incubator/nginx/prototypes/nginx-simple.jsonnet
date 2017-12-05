@@ -1,8 +1,8 @@
 // @apiVersion 0.0.1
 // @name io.ksonnet.pkg.nginx-simple
 // @description Deploys a simple, stateless nginx server. The nginx container is
-// deployed using a Kubernetes deployment, and is exposed to a network with a
-// service.
+//   deployed using a Kubernetes deployment, and is exposed to a network with a
+//   service.
 // @shortDescription A simple, stateless nginx server.
 // @optionalParam namespace string default Namespace in which to put the application
 // @param name string Name to give to each of the components
