@@ -31,12 +31,12 @@
     "prototype": "io.ksonnet.pkg.mongodb-simple",
     "componentName": "mongo",
     "flags": {
-      "name": "nginx",
+      "name": "mongodb",
       "namespace": "default",
       "rootPassword": "boots",
       "password": "boots"
     },
-    "comment": "Run a simple instance of mongodb"
+    "comment": "Run a simple instance of MongoDB"
   },
   "license": "Apache 2.0"
 }

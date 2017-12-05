@@ -19,5 +19,5 @@ local tomcatPassword = import 'param://tomcatPassword';
 k.core.v1.list.new([
   tc.parts.deployment.nonPersistent(namespace, name, tomcatUser, name),
   tc.parts.secret(namespace, name, tomcatPassword),
-  tc.parts.svc(namespace,name)
+  tc.parts.svc(namespace, name)
 ])

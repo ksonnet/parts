@@ -34,7 +34,7 @@
       "name": "nodejs",
       "namespace": "default"
     },
-    "comment": "Run a simple node.js server"
+    "comment": "Run a simple NodeJS server"
   },
   "license": "Apache 2.0"
 }
