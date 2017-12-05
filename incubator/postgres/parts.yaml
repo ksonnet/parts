@@ -2,7 +2,7 @@
   "name": "postgres",
   "apiVersion": "0.0.1",
   "kind": "ksonnet.io/parts",
-  "description": "PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness.",
+  "description": "PostgreSQL is an open source relational database system (RDBMS) that supports SQL. It is designed with an emphasis on extensibility and compliance to the SQL standard.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
     {
@@ -33,7 +33,8 @@
       "name": "posgres",
       "namespace": "default",
       "password": "boots"
-    }
+    },
+    "comment": "Run a simple instance of the postgres database"
   },
   "license": "Apache 2.0"
 }

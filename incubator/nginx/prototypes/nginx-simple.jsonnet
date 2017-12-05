@@ -1,12 +1,12 @@
 // @apiVersion 0.0.1
 // @name io.ksonnet.pkg.nginx-simple
-// @description Deploys a simple, stateless nginx server. The nginx container is
-// deployed using a Kubernetes deployment, and is exposed to a network with a
-// service.
+// @description deploys a simple, stateless nginx server. The nginx server runs
+//   as a Deployment, and is exposed to the network with a Service.
 // @shortDescription A simple, stateless nginx server.
-// @optionalParam namespace string default Namespace in which to put the application
-// @param name string Name to give to each of the components
-
+// @param namespace string Namespace (metadata) that the nginx resources are
+//   created under
+// @param name string Name (metadata) to identify all resources defined by this
+//   prototype
 
 local k = import 'k.libsonnet';
 local nginx = import 'incubator/nginx/nginx.libsonnet';

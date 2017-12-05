@@ -2,7 +2,7 @@
   "name": "mysql",
   "apiVersion": "0.0.1",
   "kind": "ksonnet.io/parts",
-  "description": "MySQL is one of the most popular database servers in the world. Notable users include Wikipedia, Facebook and Google.",
+  "description": "MySQL is a relational database management system (RDBMS) that supports SQL. It is described as the 'most popular open source database',
   "author": "ksonnet team <ksonnet-help@heptio.com>",
   "contributors": [
     {

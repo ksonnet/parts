@@ -1,11 +1,14 @@
 // @apiVersion 0.0.1
 // @name io.ksonnet.pkg.memcached-simple
-// @description Deploys Memcached on a your Kubernetes cluster through a stateful set with 3
-//   replicas, pod distribution budget (pdb), and service. Memcached
-//   can be accessed via port 11211 within the cluster.
+// @description deploys Memcached on your cluster. It runs as a StatefulSet,
+//  using 3 replicas and a pod distribution budget (PDB). Memcached
+//  is exposed as a Service, and can be accessed via port 11211 within the
+//  cluster
 // @shortDescription Simple Memcached instance with 3 replicas.
-// @param namespace string Namespace in which to put the application
-// @param name string Name to give to each of the components
+// @param namespace string Namespace (metadata) that the Memcached resources
+//  are created under
+// @param name string Name (metadata) to identify all resources defined by this
+//  prototype
 
 // TODO: Add MaxItemMemory=64 as a param like the k8s/charts?
 
