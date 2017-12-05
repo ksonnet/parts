@@ -33,7 +33,7 @@
       "name": "apache",
       "namespace": "default"
     },
-    "comment": "Run a simple NGINX server"
+    "comment": "Run a simple Apache server"
   },
   "license": "Apache 2.0"
 }

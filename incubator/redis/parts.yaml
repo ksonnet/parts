@@ -30,5 +30,5 @@ quickStart:
     name: redis
     namespace: default
     password: boots
-  comment: Run a simple redis isntance backed by a persistent volume
+  comment: Run simple Redis, backed by a PersistentVolume
 license: Apache 2.0
