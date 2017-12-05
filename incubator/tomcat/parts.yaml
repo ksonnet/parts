@@ -35,7 +35,7 @@
       "tomcatUser": "frank",
       "tomcatPassword": "boots"
     },
-    "comment": "Run a simple tomcat server"
+    "comment": "Run a simple Tomcat server, backed by a PersistentVolume"
   },
   "license": "Apache 2.0"
 }
