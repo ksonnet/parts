@@ -76,13 +76,13 @@ local k = import 'k.libsonnet';
     },
 
     configMap(namespace,name,configurationFiles=
-      {configurationFiles: {
+      {
         "mysql.cnf":
          |||
          - [mysqld]
          skip-name-resolve
         |||,
-    }}):: {
+    }):: {
         apiVersion: "v1",
         kind: "ConfigMap",
         metadata: {
@@ -121,6 +121,7 @@ local k = import 'k.libsonnet';
           kind: "Deployment",
           metadata: {
             name: name,
+            namespace: namespace,
             labels: {
               app: name,
             },
@@ -130,7 +131,6 @@ local k = import 'k.libsonnet';
               metadata: {
                 labels: {
                   app: name,
-                  namespace: namespace
                 },
               },
               spec: {
@@ -233,16 +233,15 @@ local k = import 'k.libsonnet';
                         mountPath: "/var/lib/mysql",
                         [if subPath != null then "subPath"]: subPath,
                       },
-                    ] + if "configurationFiles" != null then [
                       {
                         name: "configurations",
                         mountPath: "/etc/mysql/conf.d",
                       }
-                    ] else [],
+                    ],
                   },
                 ],
                 volumes:
-                  if "configurationFiles" != null then [
+                  [
                     {
                       name: "configurations",
                       configMap: {
@@ -251,7 +250,6 @@ local k = import 'k.libsonnet';
                         // my expectation would be that the config map has the same name
                       },
                     },
-                  ] else [] + [
                     if persistenceEnabled then {
                       name: "data",
                       persistentVolumeClaim: {
