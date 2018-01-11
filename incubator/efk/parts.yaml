@@ -1,5 +1,5 @@
 name: efk
-apiVersion: 0.0.1
+apiVersion: 0.1.0
 kind: ksonnet.io/parts
 description: >
   EFK (elasticsearch-fluentd-kibana) is a common logging stack used with
@@ -25,7 +25,6 @@ quickStart:
   componentName: elasticsearch-kibana
   flags:
     name: elasticsearch-kibana
-    namespace: default
     password: boots
   comment: Logging stack that processes input from fluentd.
 license: Apache 2.0

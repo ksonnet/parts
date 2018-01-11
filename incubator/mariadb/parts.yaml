@@ -1,6 +1,6 @@
 {
   "name": "mariadb",
-  "apiVersion": "0.0.1",
+  "apiVersion": "0.1.0",
   "kind": "ksonnet.io/parts",
   "description": "MariaDB is an open source relational database it provides a SQL interface for accessing data. The latest versions of MariaDB also include GIS and JSON features. This package deploys a maria container, a service and secret to your cluster",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
@@ -31,11 +31,9 @@
     "componentName": "mariadb",
     "flags": {
       "name": "mariadb",
-      "namespace": "default",
       "mariaRootPassword": "boot"
     },
     "comment": "Run a simple mariadb database"
   },
   "license": "Apache 2.0"
 }
-

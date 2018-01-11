@@ -1,6 +1,6 @@
 {
   "name": "mysql",
-  "apiVersion": "0.0.1",
+  "apiVersion": "0.1.0",
   "kind": "ksonnet.io/parts",
   "description": "MySQL is one of the most popular database servers in the world. Notable users include Wikipedia, Facebook and Google.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
@@ -31,7 +31,6 @@
     "componentName": "mysql",
     "flags": {
       "name": "mysql",
-      "namespace": "default"
     },
     "comment": "Run a simple MySQL server"
   },

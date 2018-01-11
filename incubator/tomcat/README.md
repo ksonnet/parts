@@ -22,7 +22,6 @@ Finally, in the ksonnet application directory, run the following:
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.persistent-tomcat tomcat \
   --name tomcat \
-  --namespace default \
   --tomcatUser frank \
   --tomcatPassword boots
 
@@ -48,7 +47,6 @@ Deploys a stateless Tomcat server. Server is deployed using a Kubernetes deploym
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.non-persistent-tomcat tomcat \
-  --namespace YOUR_NAMESPACE_HERE \
   --name YOUR_NAME_HERE \
   --tomcatUser YOUR_TOMCATUSER_HERE \
   --tomcatPassword YOUR_TOMCATPASSWORD_HERE
@@ -58,7 +56,6 @@ $ ks prototype use io.ksonnet.pkg.non-persistent-tomcat tomcat \
 
 The available options to pass prototype are:
 
-* `--namespace=<namespace>`: Namespace in which to put the application [string]
 * `--name=<name>`: Name to give to each of the components. [string]
 * `--tomcatUser=<tomcatUser>`: Username for tomcat manager page, if not specified tomcat will not assign users [string]
 * `--tomcatPassword=<tomcatPassword>`: Tomcat manager page password, to be encrypted and included in Secret API object [string]
@@ -74,7 +71,6 @@ service. The password is stored as a secret.
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.persistent-tomcat tomcat \
-  --namespace YOUR_NAMESPACE_HERE \
   --name YOUR_NAME_HERE \
   --tomcatUser YOUR_TOMCATUSER_HERE \
   --tomcatPassword YOUR_TOMCATPASSWORD_HERE
@@ -84,7 +80,6 @@ $ ks prototype use io.ksonnet.pkg.persistent-tomcat tomcat \
 
 The available options to pass prototype are:
 
-* `--namespace=<namespace>`: Namespace in which to put the application [string]
 * `--name=<name>`: Name to give to each of the components [string]
 * `--tomcatUser=<tomcatUser>`: Username for tomcat manager page, if not specified tomcat will not assign users [string]
 * `--tomcatPassword=<tomcatPassword>`: Tomcat manager page password, to be encrypted and included in Secret API object [string]

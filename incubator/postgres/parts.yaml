@@ -1,6 +1,6 @@
 {
   "name": "postgres",
-  "apiVersion": "0.0.1",
+  "apiVersion": "0.1.0",
   "kind": "ksonnet.io/parts",
   "description": "PostgreSQL is a powerful, open source object-relational database system. It has more than 15 years of active development and a proven architecture that has earned it a strong reputation for reliability, data integrity, and correctness.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
@@ -31,10 +31,8 @@
     "componentName": "postgres",
     "flags": {
       "name": "posgres",
-      "namespace": "default",
       "password": "boots"
     }
   },
   "license": "Apache 2.0"
 }
-

@@ -1,6 +1,6 @@
 {
   "name": "tomcat",
-  "apiVersion": "0.0.1",
+  "apiVersion": "0.1.0",
   "kind": "ksonnet.io/parts",
   "description": "Apache Tomcat, or Tomcat, is an open-source web server and servlet container. This package deploys a stateless tomcat container, service, and secret to your cluster",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
@@ -31,7 +31,6 @@
     "componentName": "tomcat",
     "flags": {
       "name": "tomcat",
-      "namespace": "default",
       "tomcatUser": "frank",
       "tomcatPassword": "boots"
     },

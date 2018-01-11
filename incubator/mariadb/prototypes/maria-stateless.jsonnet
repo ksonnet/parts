@@ -4,14 +4,13 @@
 //   The MariaDB container is deployed using a deployment and exposed to the
 //   network as a service. The password is stored as a secret.
 // @shortDescription A simple, stateless MariaDB deployment.
-// @param namespace string Namespace in which to put the application
 // @param name string Metadata name for each of the deployment components
 // @param mariaRootPassword string Password for root user
 
 local k = import 'k.libsonnet';
 local maria = import 'incubator/mariadb/maria.libsonnet';
 
-local namespace = import 'param://namespace';
+local namespace = import 'env://namespace';
 local name = import 'param://name';
 local mariaRootPassword = import 'param://mariaRootPassword';
 

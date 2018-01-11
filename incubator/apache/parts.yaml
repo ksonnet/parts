@@ -1,6 +1,6 @@
 {
   "name": "apache",
-  "apiVersion": "0.0.1",
+  "apiVersion": "0.1.0",
   "kind": "ksonnet.io/parts",
   "description": "Apache Ksonnet mixin library contains a simple prototype with pre-configured components to help you deploy a Apache HTTP Server app to a Kubernetes cluster with ease.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
@@ -31,10 +31,8 @@
     "componentName": "apache",
     "flags": {
       "name": "apache",
-      "namespace": "default"
     },
     "comment": "Run a simple Apache server"
   },
   "license": "Apache 2.0"
 }
-

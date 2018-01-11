@@ -21,8 +21,7 @@ Finally, in the ksonnet application directory, run the following:
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.nodejs-simple nodejs \
-  --name nodejs \
-  --namespace default
+  --name nodejs
 
 # Apply to server.
 $ ks apply -f nodejs.jsonnet
@@ -46,7 +45,6 @@ Deploy a node.js server with persistent volumes. The node container is deployed 
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.nodejs-simple nodejs \
-  --namespace YOUR_NAMESPACE_HERE \
   --name YOUR_NAME_HERE
 ```
 
@@ -54,7 +52,6 @@ $ ks prototype use io.ksonnet.pkg.nodejs-simple nodejs \
 
 The available options to pass prototype are:
 
-* `--namespace=<namespace>`: Namespace to specify location of app; default is 'default' [string]
 * `--name=<name>`: Name of app to identify all K8s objects in this prototype [string]
 
 ### io.ksonnet.pkg.nodejs-nonpersistent
@@ -67,7 +64,6 @@ Deploy a node.js server with no persistent volumes. The node container is deploy
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.nodejs-nonpersistent nodejs \
-  --namespace YOUR_NAMESPACE_HERE \
   --name YOUR_NAME_HERE
 ```
 
@@ -75,7 +71,6 @@ $ ks prototype use io.ksonnet.pkg.nodejs-nonpersistent nodejs \
 
 The available options to pass prototype are:
 
-* `--namespace=<namespace>`: Namespace to specify location of app; default is 'default' [string]
 * `--name=<name>`: Name of app to identify all K8s objects in this prototype [string]
 
 

@@ -1,3 +1,5 @@
+local env = std.extVar("__ksonnet/environments");
+local params = std.extVar("__ksonnet/params").components.maria;
 local k = import 'k.libsonnet';
 local maria = import '../maria.libsonnet';
 

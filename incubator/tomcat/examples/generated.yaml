@@ -61,7 +61,6 @@ metadata:
   labels:
     app: tomcat-app
   name: tomcat-app
-  namespace: hoot-dev
 spec:
   accessModes:
   - ReadWriteOnce
@@ -77,7 +76,6 @@ metadata:
   labels:
     app: tomcat-app
   name: tomcat-app
-  namespace: hoot-dev
 type: Opaque
 ---
 apiVersion: v1
@@ -86,7 +84,6 @@ metadata:
   labels:
     app: tomcat-app
   name: tomcat-app
-  namespace: hoot-dev
 spec:
   ports:
   - name: http

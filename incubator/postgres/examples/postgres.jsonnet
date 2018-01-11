@@ -1,3 +1,5 @@
+local env = std.extVar("__ksonnet/environments");
+local params = std.extVar("__ksonnet/params").components.postgres;
 local k = import 'k.libsonnet';
 local service = k.core.v1.service.mixin;
 local psg = import '../postgres.libsonnet';

@@ -21,8 +21,7 @@ Finally, in the ksonnet application directory, run the following:
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.nginx-simple nginx \
-  --name nginx \
-  --namespace default
+  --name nginx
 
 # Apply to server.
 $ ks apply -f nginx.jsonnet
@@ -67,7 +66,6 @@ Kubernetes deployment, and is exposed to a network with a service.
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.nginx-server-block nginx \
-  --namespace YOUR_NAMESPACE_HERE \
   --name YOUR_NAME_HERE
 ```
 
@@ -75,7 +73,6 @@ $ ks prototype use io.ksonnet.pkg.nginx-server-block nginx \
 
 The available options to pass prototype are:
 
-* `--namespace=<namespace>`: Namespace in which to put the application [string]
 * `--name=<name>`: Name to give to all components. [string]
 
 
