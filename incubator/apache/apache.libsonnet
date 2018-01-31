@@ -23,7 +23,7 @@ local deployment = k.extensions.v1beta1.deployment;
           },
           {
             name: "https",
-            port: "443",
+            port: 443,
             targetPort: "https",
           },
         ],
