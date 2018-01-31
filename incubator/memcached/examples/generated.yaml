@@ -3,7 +3,6 @@ apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   name: memcached
-  namespace: dev-alex
 spec:
   minAvailable: 3
   selector:
@@ -16,7 +15,6 @@ metadata:
   labels:
     app: memcached
   name: memcached
-  namespace: dev-alex
 spec:
   replicas: 3
   serviceName: memcached
@@ -65,7 +63,6 @@ metadata:
   labels:
     app: memcached
   name: memcached
-  namespace: dev-alex
 spec:
   clusterIP: None
   ports:

@@ -75,7 +75,6 @@ metadata:
   labels:
     app: node-app
   name: node-app
-  namespace: default
 spec:
   accessModes:
   - ReadWriteOnce
@@ -89,7 +88,6 @@ metadata:
   labels:
     app: node-app
   name: node-app
-  namespace: default
 spec:
   ports:
   - name: http

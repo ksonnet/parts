@@ -1,7 +1,7 @@
+local env = std.extVar("__ksonnet/environments");
+local params = std.extVar("__ksonnet/params").components.tomcat;
 local k = import 'k.libsonnet';
 local tc = import '../tomcat.libsonnet';
-
-
 
 k.core.v1.list.new([
   tc.parts.deployment.persistent("hoot-dev","tomcat-app", "mockUser", "mockSecretName", "mockClaimName"),

@@ -1,3 +1,5 @@
+local env = std.extVar("__ksonnet/environments");
+local params = std.extVar("__ksonnet/params").components.redis;
 local k = import 'k.libsonnet';
 local redis = import '../redis.libsonnet';
 

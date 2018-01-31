@@ -2,35 +2,35 @@ apiVersion: '0.1'
 kind: ksonnet.io/registry
 libraries:
   apache:
-    version: master
+    version: 0.1.0
     path: apache
   efk:
-    version: master
+    version: 0.1.0
     path: efk
   mariadb:
-    version: master
+    version: 0.1.0
     path: mariadb
   memcached:
-    version: master
+    version: 0.1.0
     path: memcached
   mongodb:
-    version: master
+    version: 0.1.0
     path: mongodb
   mysql:
-    version: master
+    version: 0.1.0
     path: mysql
   node:
-    version: master
+    version: 0.1.0
     path: node
   nginx:
-    version: master
+    version: 0.1.0
     path: nginx
   postgres:
-    version: master
+    version: 0.1.0
     path: postgres
   redis:
-    version: master
+    version: 0.1.0
     path: redis
   tomcat:
-    version: master
+    version: 0.1.0
     path: tomcat

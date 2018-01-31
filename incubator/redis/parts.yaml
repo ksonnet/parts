@@ -31,7 +31,6 @@
       "componentName": "redis",
       "flags": {
          "name": "redis",
-         "namespace": "default",
          "password": "boots"
       },
       "comment": "Run simple Redis, backed by a PersistentVolume"

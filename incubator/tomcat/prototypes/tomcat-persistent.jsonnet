@@ -4,7 +4,6 @@
 //   deployed using a Kubernetes deployment, and exposed to the network using a
 //   service. The password is stored as a secret.
 // @shortDescription A simple Tomcat app server, backed with persistent storage.
-// @param namespace string Namespace in which to put the application
 // @param name string Name to give to each of the components
 // @param tomcatUser string Username for tomcat manager page, if not specified tomcat will not assign users
 // @param tomcatPassword string Tomcat manager page password, to be encrypted and included in Secret API object
@@ -12,7 +11,7 @@
 local k = import 'k.libsonnet';
 local tc = import 'incubator/tomcat/tomcat.libsonnet';
 
-local namespace = import 'param://namespace';
+local namespace = import 'env://namespace';
 local name = import 'param://name';
 local tomcatUser = import 'param://tomcatUser';
 local tomcatPassword = import 'param://tomcatPassword';

@@ -1,6 +1,6 @@
 {
   "name": "nginx",
-  "apiVersion": "0.0.1",
+  "apiVersion": "0.1.0",
   "kind": "ksonnet.io/parts",
   "description": "Nginx is an open source reverse proxy server that supports HTTP, HTTPS, SMTP, POP3, and IMAP protocols. It can be used as a load balancer, HTTP cache, and web server. It is designed for high concurrency, high performance, and low memory usage.",
   "author": "ksonnet team <ksonnet-help@heptio.com>",
@@ -32,7 +32,6 @@
     "componentName": "nginx",
     "flags": {
       "name": "nginx",
-      "namespace": "default"
     },
     "comment": "Run a simple NGINX server"
   },

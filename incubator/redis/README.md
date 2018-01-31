@@ -24,7 +24,6 @@ Finally, in the ksonnet application directory, run the following:
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.redis-persistent redis \
   --name redis \
-  --namespace default \
   --password boots
 
 # Apply to server.

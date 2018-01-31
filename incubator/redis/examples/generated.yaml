@@ -5,7 +5,6 @@ metadata:
   labels:
     app: redis-app
   name: redis-app
-  namespace: dev-alex
 spec:
   template:
     metadata:
@@ -71,7 +70,6 @@ metadata:
   labels:
     app: redis-app
   name: redis-app
-  namespace: dev-alex
 spec:
   ingress:
   - ports:
@@ -87,7 +85,6 @@ metadata:
   labels:
     app: redis-app
   name: redis-app
-  namespace: dev-alex
 spec:
   accessModes:
   - ReadWriteOnce
@@ -104,7 +101,6 @@ metadata:
   labels:
     app: redis-app
   name: redis-app
-  namespace: dev-alex
 type: Opaque
 ---
 apiVersion: v1
@@ -116,7 +112,6 @@ metadata:
   labels:
     app: redis-app
   name: redis-app
-  namespace: dev-alex
 spec:
   ports:
   - name: redis

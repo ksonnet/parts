@@ -4,7 +4,6 @@
 //   using a deployment and exposed to the network with a service. The
 //   passwords are stored in a secret.
 // @shortDescription A simple MySQL deployment, backed by persistent storage.
-// @param namespace string Namespace in which to put the application
 // @param name string Name to give to each of the components
 // @param mysqlRootPassword string Password for root user
 // @param mysqlPassword string Password for new user
@@ -12,7 +11,7 @@
 local k = import 'k.libsonnet';
 local mysql = import '../mysql.libsonnet';
 
-local namespace = import 'param://namespace';
+local namespace = import 'env://namespace';
 local name = import 'param://name';
 local mysqlRootPassword = import 'param://mysqlRootPassword';
 local mysqlPassword = import 'param://mysqlPassword';

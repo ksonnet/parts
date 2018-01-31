@@ -20,8 +20,7 @@ Finally, in the ksonnet application directory, run the following:
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.simple-mysql mysql \
-  --name mysql \
-  --namespace default
+  --name mysql
 
 # Apply to server.
 $ ks apply -f mysql.jsonnet
@@ -46,7 +45,6 @@ passwords are stored in a secret.
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.simple-mysql mysql \
-  --namespace YOUR_NAMESPACE_HERE \
   --name YOUR_NAME_HERE \
   --mysqlRootPassword YOUR_MYSQLROOTPASSWORD_HERE \
   --mysqlPassword YOUR_MYSQLPASSWORD_HERE
@@ -56,7 +54,6 @@ $ ks prototype use io.ksonnet.pkg.simple-mysql mysql \
 
 The available options to pass prototype are:
 
-* `--namespace=<namespace>`: Namespace in which to put the application [string]
 * `--name=<name>`: Name to give to each of the components [string]
 * `--mysqlRootPassword=<mysqlRootPassword>`: Password for root user [string]
 * `--mysqlPassword=<mysqlPassword>`: Password for new user [string]

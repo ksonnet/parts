@@ -22,8 +22,7 @@ Finally, in the ksonnet application directory, run the following:
 $ ks prototype use io.ksonnet.pkg.mongodb-simple mongo \
   --rootPassword boots \
   --password boots \
-  --name mongodb \
-  --namespace default
+  --name mongodb
 
 # Apply to server.
 $ ks apply -f mongo.jsonnet
@@ -48,7 +47,6 @@ to the network using a service. Passwords are stored in a secret.
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.mongodb-simple mongo \
-  --namespace YOUR_NAMESPACE_HERE \
   --name YOUR_NAME_HERE \
   --rootPassword YOUR_ROOTPASSWORD_HERE \
   --password YOUR_PASSWORD_HERE
@@ -58,7 +56,6 @@ $ ks prototype use io.ksonnet.pkg.mongodb-simple mongo \
 
 The available options to pass prototype are:
 
-* `--namespace=<namespace>`: Namespace to specify destination in cluster; default is 'default' [string]
 * `--name=<name>`: Name of app to attach as identifier to all components [string]
 * `--rootPassword=<rootPassword>`: RootPassword for db admin password [string]
 * `--password=<password>`: Password for db user password [string]

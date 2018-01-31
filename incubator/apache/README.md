@@ -20,8 +20,7 @@ Finally, in the ksonnet application directory, run the following:
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.apache-simple apache \
-  --name apache \
-  --namespace default
+  --name apache
 
 # Apply to server.
 $ ks apply -f apache.jsonnet
@@ -45,7 +44,6 @@ Apache HTTP Server. Apache is deployed using a deployment, and exposed to thenet
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.apache-simple apache \
-  --namespace YOUR_NAMESPACE_HERE \
   --name YOUR_NAME_HERE
 ```
 
@@ -53,7 +51,6 @@ $ ks prototype use io.ksonnet.pkg.apache-simple apache \
 
 The available options to pass prototype are:
 
-* `--namespace=<namespace>`: Namespace to divvy up your cluster; default is 'default' [string]
 * `--name=<name>`: Name to identify all Kubernetes objects in this prototype [string]
 
 
