@@ -37,7 +37,7 @@ These prototypes, as well as how to use them, are enumerated below.
 
 ### io.ksonnet.pkg.simple-mysql
 
-Deploys MySQL backed by a persistent volume. The MySQL container is deployedusing a deployment and exposed to the network with a service. The
+Deploys MySQL backed by a persistent volume. The MySQL container is deployed using a deployment and exposed to the network with a service. The
 passwords are stored in a secret.
 
 #### Example

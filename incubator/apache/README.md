@@ -37,7 +37,7 @@ These prototypes, as well as how to use them, are enumerated below.
 
 ### io.ksonnet.pkg.apache-simple
 
-Apache HTTP Server. Apache is deployed using a deployment, and exposed to thenetwork using a service.
+Apache HTTP Server. Apache is deployed using a deployment, and exposed to the network using a service.
 
 #### Example
 
