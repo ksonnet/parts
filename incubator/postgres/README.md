@@ -20,7 +20,7 @@ Finally, in the ksonnet application directory, run the following:
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.postgres-simple postgres \
-  --name posgres \
+  --name postgres \
   --namespace default \
   --password boots
 
@@ -38,7 +38,7 @@ These prototypes, as well as how to use them, are enumerated below.
 
 ### io.ksonnet.pkg.postgres-simple
 
-Deploy postgres backed by a persistent volume. Postgres container is managed bya deployment object and exposed to the network with a service. The
+Deploy postgres backed by a persistent volume. Postgres container is managed by a deployment object and exposed to the network with a service. The
 passwords are stored in a secret.
 
 #### Example

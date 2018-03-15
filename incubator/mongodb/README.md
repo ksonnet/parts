@@ -39,7 +39,7 @@ These prototypes, as well as how to use them, are enumerated below.
 
 ### io.ksonnet.pkg.mongodb-simple
 
-Deploys a simple instance of mongodb, backed by a persistent volume claim. Themongodb container is deployed using a Kubernetes deployment, and exposed
+Deploys a simple instance of mongodb, backed by a persistent volume claim. The mongodb container is deployed using a Kubernetes deployment, and exposed
 to the network using a service. Passwords are stored in a secret.
 
 #### Example
