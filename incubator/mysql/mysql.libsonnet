@@ -76,13 +76,13 @@ local k = import 'k.libsonnet';
     },
 
     configMap(namespace,name,configurationFiles=
-      {configurationFiles: {
+      {
         "mysql.cnf":
          |||
          - [mysqld]
          skip-name-resolve
         |||,
-    }}):: {
+    }):: {
         apiVersion: "v1",
         kind: "ConfigMap",
         metadata: {
