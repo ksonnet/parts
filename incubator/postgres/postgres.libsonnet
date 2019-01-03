@@ -38,7 +38,7 @@ local service = k.core.v1.service.mixin;
         },
       },
 
-    pvc(namespace, name, storageClassName="-", labels={app:name})::
+    pvc(namespace, name, storageClassName="", labels={app:name})::
       local defaults = {
         accessMode:"ReadWriteOnce",
         size: "8Gi"

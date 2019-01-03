@@ -17,6 +17,9 @@ If you haven't yet created a [ksonnet application](linkToSomewhere), do so using
 Finally, in the ksonnet application directory, run the following:
 
 ```shell
+# Install the postgres pkg.
+$ ks pkg install incubator/postgres@master
+
 # Expand prototype as a Jsonnet file, place in a file in the
 # `components/` directory. (YAML and JSON are also available.)
 $ ks prototype use io.ksonnet.pkg.postgres-simple postgres \
@@ -25,7 +28,7 @@ $ ks prototype use io.ksonnet.pkg.postgres-simple postgres \
   --password boots
 
 # Apply to server.
-$ ks apply -f postgres.jsonnet
+$ ks apply default -c postgres
 ```
 
 ## Using the library
