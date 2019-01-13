@@ -30,7 +30,7 @@
     "prototype": "io.ksonnet.pkg.postgres-simple",
     "componentName": "postgres",
     "flags": {
-      "name": "posgres",
+      "name": "postgres",
       "namespace": "default",
       "password": "boots"
     }
